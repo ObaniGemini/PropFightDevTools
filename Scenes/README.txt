@@ -1,0 +1,1 @@
+Don't modify the content of this folder or your mods might not be compatible with the base game anymore!

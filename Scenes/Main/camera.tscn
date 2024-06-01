@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c608nq78ykwai"]
+
+[ext_resource type="Script" path="res://Scenes/Main/camera.gd" id="1_a2whb"]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2(640, 360)
+ignore_rotation = false
+position_smoothing_speed = 0.5
+script = ExtResource("1_a2whb")
+
+[node name="Line2D" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+points = PackedVector2Array(-960, 0, 960, 0)
+width = 1360.0

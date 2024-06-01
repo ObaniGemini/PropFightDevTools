@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctndq7rxrbxa8"]
+
+[ext_resource type="Script" path="res://examples/Powerups/POWERUP_EXAMPLE.gd" id="1_duyo7"]
+
+[node name="PowerupExample" type="Node2D"]
+script = ExtResource("1_duyo7")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(80, 80)
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+text = "POWERUP
+EXAMPLE"
+horizontal_alignment = 1
+vertical_alignment = 1

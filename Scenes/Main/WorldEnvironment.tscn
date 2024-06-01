@@ -1,0 +1,116 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmh11ap52dua1"]
+
+[sub_resource type="Environment" id="1"]
+background_mode = 3
+background_canvas_max_layer = 110
+tonemap_mode = 3
+tonemap_white = 16.0
+ssr_fade_in = 0.219613
+ssao_radius = 7.81
+ssao_intensity = 16.0
+ssao_power = 6.0
+ssao_detail = 5.0
+ssao_horizon = 1.0
+glow_enabled = true
+glow_levels/1 = 16.0
+glow_levels/2 = 4.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.0
+glow_normalized = true
+glow_intensity = 8.0
+glow_strength = 1.5
+glow_mix = 0.1
+glow_bloom = 1.0
+glow_blend_mode = 4
+glow_hdr_threshold = 0.75
+glow_hdr_scale = 4.0
+glow_hdr_luminance_cap = 256.0
+glow_map_strength = 0.0
+fog_light_energy = 21.15
+adjustment_contrast = 1.44
+
+[sub_resource type="Shader" id="Shader_ovkpc"]
+code = "shader_type canvas_item;
+
+// If you intend to read from mipmaps with `textureLod()` LOD values greater than `0.0`,
+// use `filter_nearest_mipmap` instead. This shader doesn't require it.
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform sampler2D noise;
+
+uniform float deform;
+uniform bool crt;
+
+const float rate = 5.0;
+
+
+const vec2 DIMENSIONS = vec2(1280.0, 720.0)/4.0;
+const vec2 BAND_DIMENSION = vec2(1280.0, 720.0)/4.0;
+const float CRT_MIX = 0.5;
+
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	if (crt) {
+		uv -= vec2(0.5, 0.5);
+		uv *= 0.95 + distance(uv, vec2(0, 0)) * 0.05;
+		uv += vec2(0.5, 0.5);
+	}
+	
+	float t = floor(TIME * rate);
+	vec4 p = texture(noise, 0.5 + 0.5 * vec2(cos(UV.x + t * 0.17), sin(UV.y + t * 0.25)));
+	vec2 DEFORM = vec2(p.r - 0.5, p.b + p.g - 1.5) * deform;
+	vec4 DEFORM_OUT = textureLod(screen_texture, uv + DEFORM, 0.0);
+	
+	float band = sqrt(1.0 - abs(uv.y * BAND_DIMENSION.y - round(uv.y * BAND_DIMENSION.y)) * 1.25);
+	
+	if (crt) {
+		vec2 ptmp = uv * DIMENSIONS;
+		vec2 rounded = round(ptmp);
+		vec2 delta = ptmp - rounded;
+		vec4 deltaX = textureLod(screen_texture, (rounded + vec2(sign(delta.x), 0.0))/DIMENSIONS, 0.0) * 1.25;
+		vec4 deltaY = textureLod(screen_texture, (rounded + vec2(0.0, sign(delta.y)))/DIMENSIONS, 0.0) * 1.25;
+		
+		vec2 pos = rounded/DIMENSIONS;
+		vec4 PIXELIZE_OUT = mix(mix(textureLod(screen_texture, pos, 0.0), deltaX, 2.0 * (delta.x * delta.x)), deltaY, 2.0 * (delta.y * delta.y));
+	
+		COLOR.rgb = mix(DEFORM_OUT.rgb, PIXELIZE_OUT.rgb, CRT_MIX) * band;
+	} else {
+		COLOR.rgb = DEFORM_OUT.rgb;
+	}
+	
+	float dist = distance(vec2(0.5, 0.5), uv);
+	COLOR.rgb *= 1.05 - dist * dist;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_61tc3"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n2ddr"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_61tc3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8w6c"]
+shader = SubResource("Shader_ovkpc")
+shader_parameter/deform = 0.007
+shader_parameter/crt = null
+shader_parameter/noise = SubResource("NoiseTexture2D_n2ddr")
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 110
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_h8w6c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

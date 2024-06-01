@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://mgnb2ksxg1hq"]
+
+[ext_resource type="Script" path="res://Scenes/Classes/level.gd" id="2"]
+[ext_resource type="Script" path="res://Scenes/Classes/color_sprite.gd" id="3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duxeg"]
+size = Vector2(1280, 256)
+
+[node name="LevelExample" type="Node2D"]
+script = ExtResource("2")
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="Position2D2" type="Marker2D" parent="Spawns"]
+position = Vector2(190, 352)
+
+[node name="Position2D3" type="Marker2D" parent="Spawns"]
+position = Vector2(636.614, 517.726)
+
+[node name="Position2D4" type="Marker2D" parent="Spawns"]
+position = Vector2(647, 345)
+
+[node name="Position2D5" type="Marker2D" parent="Spawns"]
+position = Vector2(1032, 382)
+
+[node name="Position2D12" type="Marker2D" parent="Spawns"]
+position = Vector2(267, 433)
+
+[node name="Position2D13" type="Marker2D" parent="Spawns"]
+position = Vector2(163.606, 477.329)
+
+[node name="Position2D10" type="Marker2D" parent="Spawns"]
+position = Vector2(547, 438)
+
+[node name="Position2D9" type="Marker2D" parent="Spawns"]
+position = Vector2(719, 434)
+
+[node name="Position2D11" type="Marker2D" parent="Spawns"]
+position = Vector2(1098, 465)
+
+[node name="Position2D7" type="Marker2D" parent="Spawns"]
+position = Vector2(986, 498)
+
+[node name="collisions" type="Node2D" parent="."]
+script = ExtResource("3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="collisions"]
+position = Vector2(640, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collisions/StaticBody2D"]
+shape = SubResource("RectangleShape2D_duxeg")
+
+[node name="Line2D" type="Line2D" parent="collisions/StaticBody2D/CollisionShape2D"]
+show_behind_parent = true
+points = PackedVector2Array(-640, 0, 640, 0)
+width = 256.0

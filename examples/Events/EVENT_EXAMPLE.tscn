@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://buwhq6n0ls01b"]
+
+[ext_resource type="Script" path="res://examples/Events/EVENT_EXAMPLE.gd" id="1_7qxni"]
+
+[node name="EventExample" type="Node"]
+script = ExtResource("1_7qxni")
+
+[node name="Timer" type="Timer" parent="."]
