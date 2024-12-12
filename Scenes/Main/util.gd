@@ -5,18 +5,8 @@ class TimeOutTimer:
 	var node: Node
 	var time: float
 	
-	func _init(n: Node, t: float):
-		node = n
-		time = t
-	
-	func timedOut() -> bool:
-		if _t and is_instance_valid(_t) and _t.time_left > 0.0:
-			return true
-		
-		_t = node.get_tree().create_timer(time)
-		return false
-
-
+	func _init(_n:Node, _t:float) : pass
+	func timedOut() -> bool : return bool()
 func ground_hit(_sound, _velocity:float, _max_volume:float, _min_volume:float) : pass
 func shoot_entity(_shooter, _node, _start_pos:Vector2, _rot:float, _object_rot:float, _offset:Vector2, _velocity:float, _recoil:float, _c:Color) : pass
 func make_two_sided_polygon(_node, _PolygonNode:CollisionPolygon2D) : pass

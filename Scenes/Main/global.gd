@@ -50,81 +50,22 @@ class Player:
 	var stats := Character.BASE_STATS.duplicate()
 	
 	
-	func _init(ID : int = -1):
-		id = ID
-		action_set = controls.get_action_set(ID)
-	
-	func add_instance(instance):
-		instances.push_back(instance)
-	
-	func remove_instance(instance):
-		var idx : int = instances.find(instance)
-		if idx != -1:
-			instances[idx].queue_free()
-			instances.pop_at(idx)
-	
-	func random_instance():
-		if instances.size() == 0:
-			return null
-		return instances.pick_random()
-	
-	func is_instanced() -> bool:
-		for i in instances.size():
-			if !is_instance_valid(instances[i]):
-				continue
-			return true
-		return false
-	
-	func free_instances():
-		for i in instances.size():
-			if is_instance_valid(instances[i]):
-				instances[i].queue_free()
-		instances.clear()
-
+	func _init(_ID:int=-1) : pass
+	func add_instance(_instance) : pass
+	func remove_instance(_instance) : pass
+	func random_instance() : pass
+	func is_instanced() -> bool : return bool()
+	func free_instances() : pass
 class Team:
 	var id: int
 	var modulate: Color
 	var instances : Array[Player] = []
 	var score := 0
 	
-	func _init(i: int, m: Color):
-		id = i
-		modulate = m
-	
-	func indicator(c: Character):
-		if c.team_indicator != null:
-			c.team_indicator.die()
-		
-		c.team_indicator = preload("res://Scenes/Effects/TeamIndicator.tscn").instantiate()
-		c.team_indicator.modulate = modulate
-		c.team_indicator.player = c
-		
-		if c.is_node_ready():
-			c.add_team_indicator()
-	
-	func remove_player(ply: Player):
-		instances.erase(ply)
-		if instances.is_empty():
-			hud.remove_team_score(id)
-	
-	func add_player(ply: Player):
-		if ply in instances:
-			return
-		
-		if game.mode == game.Mode.Teams:
-			for instance in ply.instances:
-				indicator(instance)
-		
-		if ply.team != null:
-			ply.team.remove_player(ply)
-		
-		ply.team = self
-		
-		if instances.is_empty():
-			hud.add_team_score(id)
-		instances.append(ply)
-
-
+	func _init(_i:int, _m:Color) : pass
+	func indicator(_c:Character) : pass
+	func remove_player(_ply:Player) : pass
+	func add_player(_ply:Player) : pass
 var teams := [
 	Team.new(0, Color8(255, 30, 100)),
 	Team.new(1, Color8(40, 150, 255)),

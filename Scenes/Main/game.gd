@@ -105,6 +105,7 @@ func update_score(_element, _points) : pass
 func reset_players() : pass
 func return_best(_content:Array, _alive:bool) -> Array : return Array()
 func best_players(_alive:=true) -> Array : return Array()
+enum State { Normal, Tutorial, Sandbox, Lobby, Ending, Max }
 var state := Game.State.Max
 func set_game_state(_s:State) : pass
 func add_xp() : pass

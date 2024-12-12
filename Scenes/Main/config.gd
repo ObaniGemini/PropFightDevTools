@@ -62,18 +62,7 @@ class XPData:
 	var start_coins := 0
 	var end_coins := 0 
 	
-	func _init(s: Array[int], sxp: int, slvl: int, scoins: int):
-		scores = s.duplicate()
-		for x in s:
-			total_xp += x
-		
-		start_xp = sxp
-		start_level = slvl
-		end_xp = (start_xp + total_xp) % MAX_XP
-		end_level = start_level + (start_xp + total_xp) / MAX_XP
-		start_coins = scoins
-		end_coins = scoins + (end_level - start_level) * COINS_PER_LEVEL
-
+	func _init(_s:Array[int], _sxp:int, _slvl:int, _scoins:int) : pass
 const VOLUME_LIMIT := 10.0
 func get_bus_config(_volume:float, _bus_id:int, _min_db:float) -> float : return float()
 var old_locale = TranslationServer.get_locale()

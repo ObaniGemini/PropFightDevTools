@@ -10,8 +10,7 @@ config_version=5
 
 [application]
 
-config/name="PropFight"
-run/main_scene="res://Scenes/Cinematic/GodotEngine.tscn"
+config/name="PropFightDevTools"
 config/features=PackedStringArray("4.3")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -24,18 +23,11 @@ global="*res://Scenes/Main/global.gd"
 controls="*res://Scenes/Main/controls.gd"
 steam="*res://Scenes/Main/steam.gd"
 game="*res://Scenes/Main/game.gd"
-hud="*res://Scenes/Menus/HUD.tscn"
 config="*res://Scenes/Main/config.gd"
 camera="*res://Scenes/Main/camera.tscn"
 color="*res://Scenes/Main/color.gd"
-gamemenu="*res://Scenes/Menus/gamemenu.tscn"
 environment="*res://Scenes/Main/environment.tscn"
-death="*res://Scenes/Main/death.tscn"
-music="*res://Scenes/Main/music.tscn"
 debug="*res://Scenes/Main/debug.tscn"
-addoncreator="*res://AddonCreator/AddonCreator.tscn"
-Tutorial="*res://Scenes/Menus/tutorial.tscn"
-fade="*res://Scenes/Menus/fade.tscn"
 
 [debug]
 
