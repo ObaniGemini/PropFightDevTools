@@ -1,18 +1,19 @@
 extends Node
 
+const MAX_TEAMS := 6
+const MAX_PLAYERS := 8
 
 const plyColors := [
-	Color8(255, 25, 25), #red
+	Color8(255, 0, 0), #red
 	Color8(255, 140, 0), #darkorange
-	Color8(255, 220, 100), #yellow
-	Color8(75, 255, 75), #limegreen
-	Color8(200, 255, 100), #limegreen
-	Color8(176, 224, 255), #powderblue
-	Color8(25, 100, 255), #royalblue
-	Color8(180, 60, 255), #blueviolet
-	Color8(255, 140, 220), #hotpink
-	Color8(255, 255, 255), #lightgray
-	Color8(125, 125, 125), #darkgray
+	Color8(255, 240, 0), #yellow
+	Color8(0, 255, 0), #green
+	Color8(80, 255, 255), #light blue
+	Color8(25, 120, 255), #blue
+	Color8(180, 25, 255), #violet
+	Color8(255, 140, 200), #pink
+	Color8(255, 255, 255), #white
+	Color8(150, 150, 150), #gray
 ]
 
 const WIDTH := 1280
@@ -23,28 +24,33 @@ var paused := false
 
 var CONTROLLERS := {}
 
+var WORLD : Node2D
 
 ###players
 var players := {}
 
 @onready var IS_EDITOR : bool = OS.has_feature("editor")
 @onready var STEAM : bool = true && !IS_EDITOR
-@onready var ADDON_CREATOR := global.STEAM and OS.get_cmdline_user_args().has("--addon-creator")
+@onready var SANDBOX : bool = STEAM and OS.get_cmdline_user_args().has("--sandbox")
+@onready var ADDON_CREATOR : bool = STEAM and !SANDBOX and OS.get_cmdline_user_args().has("--addon-creator")
 
 @onready var MASTER_BUS := AudioServer.get_bus_index("Master")
-@onready var MAIN_BUS := AudioServer.get_bus_index("Main")
+@onready var SFX_BUS := AudioServer.get_bus_index("SFX")
 @onready var MUSIC_BUS := AudioServer.get_bus_index("Music")
 
 func _ready() : pass
 class Player:
 	var id := -1
+	var team : Team
 	var colorID := -1
 	var score := 0
 	var instances : Array[Character] = []
 	var disconnected := false
-	var action_set : Array[String] = []
+	var action_set : Array = []
+	var stats := Character.BASE_STATS.duplicate()
 	
-	func _init(ID : int):
+	
+	func _init(ID : int = -1):
 		id = ID
 		action_set = controls.get_action_set(ID)
 	
@@ -75,23 +81,77 @@ class Player:
 				instances[i].queue_free()
 		instances.clear()
 
+class Team:
+	var id: int
+	var modulate: Color
+	var instances : Array[Player] = []
+	var score := 0
+	
+	func _init(i: int, m: Color):
+		id = i
+		modulate = m
+	
+	func indicator(c: Character):
+		if c.team_indicator != null:
+			c.team_indicator.die()
+		
+		c.team_indicator = preload("res://Scenes/Effects/TeamIndicator.tscn").instantiate()
+		c.team_indicator.modulate = modulate
+		c.team_indicator.player = c
+		
+		if c.is_node_ready():
+			c.add_team_indicator()
+	
+	func remove_player(ply: Player):
+		instances.erase(ply)
+		if instances.is_empty():
+			hud.remove_team_score(id)
+	
+	func add_player(ply: Player):
+		if ply in instances:
+			return
+		
+		if game.mode == game.Mode.Teams:
+			for instance in ply.instances:
+				indicator(instance)
+		
+		if ply.team != null:
+			ply.team.remove_player(ply)
+		
+		ply.team = self
+		
+		if instances.is_empty():
+			hud.add_team_score(id)
+		instances.append(ply)
+
+
+var teams := [
+	Team.new(0, Color8(255, 30, 100)),
+	Team.new(1, Color8(40, 150, 255)),
+	Team.new(2, Color8(50, 255, 100)),
+	Team.new(3, Color8(240, 255, 50)),
+	Team.new(4, Color8(200, 50, 255)),
+	Team.new(5, Color8(255, 255, 255)),
+]
+
+func playerStats(_playerID:int) -> Dictionary : return Dictionary()
+var num_players := 0
+var _internal_players := {}
+func _update_players_list() : pass
 func getPlayers() -> Array : return Array()
 func playerIds() -> Array : return Array()
 func playerColor(_id:int) -> Color : return Color()
 func playersNumber() -> int : return int()
 func playersAlive() -> int : return int()
 func winnerInstances() -> Array : return Array()
-func add_player(_id) : pass
-func remove_player(_id) : pass
+func add_player(_id) -> Player : return Player.new()
+func remove_player(_id) -> Player : return Player.new()
 func switch_color(_id) : pass
 func mainListEmpty(_n:String, _a:Array) -> bool : return bool()
 func check_exists(_path:String, _should_create:bool) -> bool : return bool()
-func list_file_pathes(_folder:String, _extensions:PackedStringArray) -> Array[String] : return Array[String]()
+func list_file_pathes(_folder:String, _extensions:PackedStringArray) -> Array : return Array()
 func clear_players() : pass
 func get_file_name(_path:String) -> String : return String()
-func get_file_names(_scenesPathes:Array) -> Array[String] : return Array[String]()
+func get_file_names(_scenesPathes:Array) -> Array : return Array()
 func pause(_p) : pass
 func is_paused() -> bool : return bool()
-var _time_scale_tween : Tween
-var _goal_time_scale := 1.0
-func set_time_scale(_time:float, _override:=-1.0) : pass

@@ -4,11 +4,25 @@ signal die
 signal shoot
 signal switch
 
+const BASE_STATS := {
+	"time_alive": 0.0, #implemented
+	"streak": 0, #implemented
+	"max_streak": 0, #implemented
+	"num_inputs": 0, #implemented
+	"distance": 0.0,
+	"powerups": 0,
+	"emotes": 0,
+}
+
 const Flying := 1 << 0
 const Big := 1 << 1
-const All := (1 << 2) - 1
 
 @export_flags("Flying:1", "Big:2") var prop_type := 0
+
+@export var CROSS := false
+@export var SQUARE := false
+@export var CIRCLE := false
+@export var TRIANGLE := false
 
 var self_color := Color()
 var colorID := 0
@@ -31,10 +45,15 @@ var movement := Vector2(0, 0)
 var actions := []
 var dirs : Array[float] = [0.0, 0.0, 0.0, 0.0]
 
+var team_indicator : TeamIndicator
 
-
+const ALIVE_TIMER := 10.0
+var _timer : Timer
+func _add_time_alive() : pass
+func _add_time_left() : pass
 # Called when the node enters the scene tree for the first time.
 func spawn(_pos:Vector2, _data:global.Player) : pass
+func add_team_indicator() : pass
 func push(_vforce:float, _hforce:float, _rotforce:float) : pass
 func rotate_player(_f:float) : pass
 func stronger_than(_b) -> bool : return bool()
@@ -54,10 +73,13 @@ var tween_nodes := {}
 func tween_scale(_from:Vector2) : pass
 func restart_tween() : pass
 func set_color() : pass
-func spawn_fx() : pass
+func _spawn_character() : pass
 func update_color() : pass
-func add_fx(_fx, _time=0, _variable="", _start_value=null, _end_value=null) : pass
-func remove_fx(_fx_path, _variable, _value) : pass
+var _fx_timer : SceneTreeTimer
+func _make_fx_timer(_fx, _time:int) : pass
+func add_fx(_fx, _can_duplicate:=true, _time:=0) : pass
+func remove_fx(_fx) : pass
+func _give_input() : pass
 func _cross() : pass
 func cross() : pass
 func _uncross() : pass
@@ -68,18 +90,21 @@ func unsquare() : pass
 func _circle() : pass
 func circle() : pass
 func uncircle() : pass
+func _triangle() : pass
 func triangle() : pass
 func untriangle() : pass
 func check_dir(_event, _dir:int) -> bool : return bool()
 func jump_fx() : pass
 func kill(_oob:=false) : pass
 func set_side(_obj, _side:int) : pass
-func revert() : pass
-func make_sleep() : pass
-func _input(_event) : pass
 func crush() : pass
-func _integrate_forces(_state:PhysicsDirectBodyState2D) : pass
-func _process(__delta) : pass
+func _notification(_what:int) : pass
+func physics(_delta:float) : pass#to override
+var _physics_on := true
+func is_physics() -> bool : return bool()
+func set_physics(_boolean:bool) : pass
+@onready var previous_pos = global_position
+func _physics_process(_delta:float) : pass
 func fastfall(_vel) -> float : return float()
 func water() -> bool : return bool()
 func on_player() -> bool : return bool()
@@ -87,4 +112,4 @@ func land(_on_ply=true) -> bool : return bool()
 func land_or_water(_on_ply=true) -> bool : return bool()
 ###emotes
 var currEmote = null
-func emote(_emoteNum) : pass
+func emote(_type:String) : pass

@@ -10,5 +10,6 @@ script = ExtResource("1_a2whb")
 
 [node name="Line2D" type="Line2D" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 40
 points = PackedVector2Array(-960, 0, 960, 0)
 width = 1360.0

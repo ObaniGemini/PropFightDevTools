@@ -1,0 +1,159 @@
+[gd_scene load_steps=15 format=3 uid="uid://dmh11ap52dua1"]
+
+[ext_resource type="Script" path="res://Scenes/Main/environment.gd" id="1_vhq23"]
+[ext_resource type="Shader" path="res://Scenes/Main/outlines.gdshader" id="2_3us2q"]
+[ext_resource type="Shader" path="res://Scenes/Main/shaderprepass.gdshader" id="2_ptg17"]
+[ext_resource type="Shader" path="res://Scenes/Main/crt.gdshader" id="4_ibt5t"]
+
+[sub_resource type="Environment" id="1"]
+background_mode = 3
+background_canvas_max_layer = 111
+tonemap_mode = 3
+tonemap_white = 16.0
+ssr_fade_in = 0.219613
+ssao_radius = 7.81
+ssao_intensity = 16.0
+ssao_power = 6.0
+ssao_detail = 5.0
+ssao_horizon = 1.0
+glow_enabled = true
+glow_levels/1 = 16.0
+glow_levels/2 = 4.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.0
+glow_normalized = true
+glow_intensity = 8.0
+glow_strength = 1.5
+glow_mix = 0.1
+glow_bloom = 1.0
+glow_blend_mode = 4
+glow_hdr_threshold = 0.75
+glow_hdr_scale = 4.0
+glow_hdr_luminance_cap = 256.0
+glow_map_strength = 0.0
+fog_light_energy = 21.15
+adjustment_contrast = 1.1
+adjustment_saturation = 1.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2oswa"]
+shader = ExtResource("2_ptg17")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkmgk"]
+shader = ExtResource("2_3us2q")
+shader_parameter/precision = null
+
+[sub_resource type="Shader" id="Shader_ovkpc"]
+code = "shader_type canvas_item;
+
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform sampler2D noise : repeat_enable;
+uniform sampler2D dithering : repeat_enable;
+
+uniform float deform;
+const float rate = 5.0;
+
+void fragment() {
+	float t = floor(TIME * rate);
+	vec4 p = texture(noise, 0.5 + 0.5 * vec2(cos(SCREEN_UV.x + t * 0.17), sin(SCREEN_UV.y + t * 0.25)));
+	vec2 DEFORM = SCREEN_UV + vec2(p.r - 0.5, p.b + p.g - 1.5) * deform;
+	vec4 DEFORM_OUT = texture(screen_texture, vec2(clamp(DEFORM.x, 0.0, 1.0), clamp(DEFORM.y, 0.0, 1.0)));
+
+	float dist = distance(vec2(0.5, 0.5), SCREEN_UV);
+	float factor = 1.05 - dist * dist;
+	// vignette
+	DEFORM_OUT.rgb *= factor;
+	// dither
+	DEFORM_OUT.rgb += (texture(dithering, SCREEN_UV + vec2(cos(t * 151.0), cos(t * 13.0))).rgb - vec3(0.5)) * 0.04 * factor;
+
+	//desaturate
+	//vec3 gray = vec3(dot(vec3(0.2126,0.7152,0.0722), DEFORM_OUT.rgb));
+	//DEFORM_OUT.rgb = clamp(vec3(mix(DEFORM_OUT.rgb, gray, (dist * dist))), vec3(0.0), vec3(1.0));
+
+	COLOR = DEFORM_OUT;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v08p4"]
+frequency = 1.0
+fractal_gain = 2.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gi0jp"]
+width = 2560
+height = 1440
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_v08p4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_61tc3"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n2ddr"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_61tc3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8w6c"]
+shader = SubResource("Shader_ovkpc")
+shader_parameter/deform = 0.007
+shader_parameter/noise = SubResource("NoiseTexture2D_n2ddr")
+shader_parameter/dithering = SubResource("NoiseTexture2D_gi0jp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xfq1u"]
+shader = ExtResource("4_ibt5t")
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("1")
+script = ExtResource("1_vhq23")
+
+[node name="Abberations" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = 30
+material = SubResource("ShaderMaterial_2oswa")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 127.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LevelOutline" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = 30
+material = SubResource("ShaderMaterial_fkmgk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 127.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DeformDither" type="CanvasLayer" parent="."]
+layer = 110
+
+[node name="ColorRect" type="ColorRect" parent="DeformDither"]
+material = SubResource("ShaderMaterial_h8w6c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CRT" type="CanvasLayer" parent="."]
+layer = 112
+
+[node name="ColorRect" type="ColorRect" parent="CRT"]
+material = SubResource("ShaderMaterial_xfq1u")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

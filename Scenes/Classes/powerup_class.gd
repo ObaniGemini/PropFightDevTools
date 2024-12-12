@@ -1,4 +1,4 @@
-class_name PowerupClass extends Node2D
+class_name Powerup extends Node2D
 
 enum Type {
 	Malus,
@@ -7,4 +7,4 @@ enum Type {
 
 @export var type : Type = Type.Malus
 
-func active(__id) : pass
+func active(_id) : pass

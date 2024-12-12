@@ -3,7 +3,7 @@ extends Node2D
 const SHADER := "shader_type canvas_item;
 
 void fragment() {
-	COLOR.rg *= cos(SCREEN_UV * 10.0 + TIME * 0.5) * 0.2 + 0.8;
+	COLOR.rg *= cos(SCREEN_UV * 10.0 + TIME * 0.5) * 0.3 + 0.7;
 }"
 
 
