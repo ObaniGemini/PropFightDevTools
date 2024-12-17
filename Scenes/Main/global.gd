@@ -29,15 +29,18 @@ var WORLD : Node2D
 ###players
 var players := {}
 
+const CUSTOM_MODPACKS_FOLDER := "custom-modpack="
+
 @onready var IS_EDITOR : bool = OS.has_feature("editor")
 @onready var STEAM : bool = true && !IS_EDITOR
-@onready var SANDBOX : bool = STEAM and OS.get_cmdline_user_args().has("--sandbox")
-@onready var ADDON_CREATOR : bool = STEAM and !SANDBOX and OS.get_cmdline_user_args().has("--addon-creator")
+@onready var SANDBOX : bool = STEAM and OS.get_cmdline_user_args().has("sandbox")
+@onready var ADDON_CREATOR : bool = STEAM and !SANDBOX and OS.get_cmdline_user_args().has("addon-creator")
 
 @onready var MASTER_BUS := AudioServer.get_bus_index("Master")
 @onready var SFX_BUS := AudioServer.get_bus_index("SFX")
 @onready var MUSIC_BUS := AudioServer.get_bus_index("Music")
 
+func load_packs(_folder:String) : pass
 func _ready() : pass
 class Player:
 	var id := -1

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bovwokf65pkxg"]
+[gd_scene load_steps=4 format=3 uid="uid://bovwokf65pkxg"]
 
 [ext_resource type="Script" path="res://Scenes/Main/debug.gd" id="1_e5ukc"]
+[ext_resource type="Script" path="res://Scenes/Main/console.gd" id="2_7gm66"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2og3g"]
 outline_size = 8
@@ -25,8 +26,4 @@ grow_vertical = 0
 size_flags_horizontal = 3
 label_settings = SubResource("LabelSettings_2og3g")
 vertical_alignment = 2
-
-[node name="cursor" type="Polygon2D" parent="."]
-modulate = Color(0.5, 0.5, 0.5, 0.5)
-position = Vector2(1272, 360)
-polygon = PackedVector2Array(0, -360, 0, 360, 8, 360, 8, -360)
+script = ExtResource("2_7gm66")

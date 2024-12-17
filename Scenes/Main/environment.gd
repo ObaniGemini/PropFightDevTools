@@ -2,6 +2,7 @@ extends WorldEnvironment
 
 @onready var base_viewport := get_viewport()
 @onready var outline := $LevelOutline
+@onready var OPENGL3 := RenderingServer.get_rendering_device() == null
 var level_viewport : SubViewport = null
 
 func get_deform() -> float : return float()

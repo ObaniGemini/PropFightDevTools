@@ -11,6 +11,9 @@ config_version=5
 [application]
 
 config/name="PropFightDevTools"
+run/main_scene="res://ModTester.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="PropFight"
 config/features=PackedStringArray("4.3")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -21,7 +24,6 @@ config/icon="res://icon.png"
 util="*res://Scenes/Main/util.gd"
 global="*res://Scenes/Main/global.gd"
 controls="*res://Scenes/Main/controls.gd"
-steam="*res://Scenes/Main/steam.gd"
 game="*res://Scenes/Main/game.gd"
 config="*res://Scenes/Main/config.gd"
 camera="*res://Scenes/Main/camera.tscn"
@@ -201,7 +203,7 @@ pointing/emulate_mouse_from_touch=false
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Resources/Locales/locales.en.translation", "res://Resources/Locales/locales.fr.translation")
+
 
 [layer_names]
 
@@ -238,3 +240,4 @@ abberation={
 "type": "float",
 "value": 0.0
 }
+

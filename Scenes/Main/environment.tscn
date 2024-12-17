@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dmh11ap52dua1"]
+[gd_scene load_steps=19 format=3 uid="uid://dmh11ap52dua1"]
 
 [ext_resource type="Script" path="res://Scenes/Main/environment.gd" id="1_vhq23"]
 [ext_resource type="Shader" path="res://Scenes/Main/outlines.gdshader" id="2_3us2q"]
@@ -54,22 +54,9 @@ const float rate = 5.0;
 
 void fragment() {
 	float t = floor(TIME * rate);
-	vec4 p = texture(noise, 0.5 + 0.5 * vec2(cos(SCREEN_UV.x + t * 0.17), sin(SCREEN_UV.y + t * 0.25)));
+	vec3 p = texture(noise, 0.5 + 0.5 * vec2(cos(SCREEN_UV.x + t * 0.17), sin(SCREEN_UV.y + t * 0.25))).rgb;
 	vec2 DEFORM = SCREEN_UV + vec2(p.r - 0.5, p.b + p.g - 1.5) * deform;
-	vec4 DEFORM_OUT = texture(screen_texture, vec2(clamp(DEFORM.x, 0.0, 1.0), clamp(DEFORM.y, 0.0, 1.0)));
-
-	float dist = distance(vec2(0.5, 0.5), SCREEN_UV);
-	float factor = 1.05 - dist * dist;
-	// vignette
-	DEFORM_OUT.rgb *= factor;
-	// dither
-	DEFORM_OUT.rgb += (texture(dithering, SCREEN_UV + vec2(cos(t * 151.0), cos(t * 13.0))).rgb - vec3(0.5)) * 0.04 * factor;
-
-	//desaturate
-	//vec3 gray = vec3(dot(vec3(0.2126,0.7152,0.0722), DEFORM_OUT.rgb));
-	//DEFORM_OUT.rgb = clamp(vec3(mix(DEFORM_OUT.rgb, gray, (dist * dist))), vec3(0.0), vec3(1.0));
-
-	COLOR = DEFORM_OUT;
+	COLOR.rgb = texture(screen_texture, vec2(clamp(DEFORM.x, 0.0, 1.0), clamp(DEFORM.y, 0.0, 1.0))).rgb;
 }
 "
 
@@ -96,6 +83,48 @@ shader = SubResource("Shader_ovkpc")
 shader_parameter/deform = 0.007
 shader_parameter/noise = SubResource("NoiseTexture2D_n2ddr")
 shader_parameter/dithering = SubResource("NoiseTexture2D_gi0jp")
+
+[sub_resource type="Shader" id="Shader_k1yrl"]
+code = "shader_type canvas_item;
+
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform sampler2D dithering : repeat_enable;
+uniform float dither : hint_range(0.0, 1.0, 0.001);
+
+const float rate = 5.0;
+
+void fragment() {
+	float t = floor(TIME * rate);
+	float dist = distance(vec2(0.5, 0.5), SCREEN_UV);
+	float factor = 1.05 - dist * dist;
+
+	// vignette
+	COLOR.rgb = texture(screen_texture, SCREEN_UV).rgb;
+	COLOR.rgb *= factor;
+	// dither
+	COLOR.rgb += (texture(dithering, SCREEN_UV + vec2(cos(t * 151.0), cos(t * 13.0))).rgb - vec3(0.5)) * dither * factor;
+
+	//desaturate
+	//vec3 gray = vec3(dot(vec3(0.2126,0.7152,0.0722), DEFORM_OUT.rgb));
+	//DEFORM_OUT.rgb = clamp(vec3(mix(DEFORM_OUT.rgb, gray, (dist * dist))), vec3(0.0), vec3(1.0));
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nrb6p"]
+frequency = 1.0
+fractal_gain = 2.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ijwq0"]
+width = 2560
+height = 1440
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_nrb6p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nrqim"]
+shader = SubResource("Shader_k1yrl")
+shader_parameter/dither = 0.04
+shader_parameter/dithering = SubResource("NoiseTexture2D_ijwq0")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xfq1u"]
 shader = ExtResource("4_ibt5t")
@@ -134,11 +163,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DeformDither" type="CanvasLayer" parent="."]
+[node name="Deform" type="CanvasLayer" parent="."]
 layer = 110
 
-[node name="ColorRect" type="ColorRect" parent="DeformDither"]
+[node name="ColorRect" type="ColorRect" parent="Deform"]
 material = SubResource("ShaderMaterial_h8w6c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dither" type="CanvasLayer" parent="."]
+layer = 111
+
+[node name="ColorRect" type="ColorRect" parent="Dither"]
+material = SubResource("ShaderMaterial_nrqim")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
