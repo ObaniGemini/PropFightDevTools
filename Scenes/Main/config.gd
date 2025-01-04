@@ -7,7 +7,7 @@ const default_config := {
 	"music" : 70.0,
 	"fullscreen" : true,
 	"crt" : false,
-	"outlines_precision": true,
+	"graphics": true,
 	
 	###Game
 	"gamemode": Game.Mode.Melee,
@@ -22,18 +22,19 @@ const default_config := {
 	"language": "undefined",
 	
 	###Test room
-	game.BACKGROUNDS: "",
-	game.EVENTS: "",
-	game.KILLSCREENS: "",
-	game.LEVELS: "",
-	game.POWERUPS: "",
-	game.PROPS: ""
+	global.BACKGROUNDS: "",
+	global.EVENTS: "",
+	global.KILLSCREENS: "",
+	global.LEVELS: "",
+	global.POWERUPS: "",
+	global.PROPS: ""
 }
 
 const default_save := {
 	"level": 0,
 	"coins": 0,
 	"xp": 0,
+	"playercolor": 0,
 	"sandbox": false,
 }
 
@@ -69,6 +70,7 @@ var old_locale = TranslationServer.get_locale()
 func change_locale(_l:String) : pass
 var coins := -1
 var tmp_cfg := {}
+var startup := true
 func check_state(_p:String, _f:Callable) : pass
 func update_state() : pass
 const CFG_USER := "user://PropFight.config"

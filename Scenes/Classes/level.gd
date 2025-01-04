@@ -3,17 +3,23 @@ class_name Level extends Node2D
 const OUTLINE_LAYER := 2
 const NOOUTLINE_LAYER := 4
 
+enum FilterType {
+	Exclude,
+	Restrict
+}
+
 @export var forced_bg : PackedScene = null
-@export_flags("Flying:1", "Big:2") var prop_type := 0
-@export var allowed_props : Array[String] = []
-@export var excluded_props : Array[String] = []
-var props_selection : bool
+@export_flags("Small", "Medium", "Big") var size := 7
+@export_flags("Normal", "Flying") var movement := 3
+@export var filtered_props : Array[String] = []
+@export var filter_type := FilterType.Exclude
 
-var allowed : Array[String] = []
-var excluded : Array[String] = []
+var allowed : Array = []
 
-@onready var _hack_connection := _on_ready()
+func __get_positions(_path:String) -> Array[Vector2] : return []
+@onready var spawns := __get_positions("Spawns")
+@onready var winner_spawns := __get_positions("WinnerSpawns")
 
+var forced_bg_instance : Scenery = null
 func init(_force:bool) : pass
 func set_visibility(_node:CanvasItem, _idx:int) : pass
-func _on_ready() -> int : return int()

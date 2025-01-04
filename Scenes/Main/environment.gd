@@ -7,6 +7,7 @@ var level_viewport : SubViewport = null
 
 func get_deform() -> float : return float()
 func set_deform(_v:float) : pass
+func set_high_quality(_b:bool) : pass
 func _ready() : pass
 func set_viewport(_viewport:SubViewport) : pass
 func set_crt(_visible:bool) : pass

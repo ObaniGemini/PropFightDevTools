@@ -6,9 +6,16 @@ const cursorH := global.HEIGHT
 const cursorW := 8
 var pos := 0.0
 
+@onready var background := Polygon2D.new()
 @onready var cursor := Polygon2D.new()
 
 func _ready():
+	background.polygon = PackedVector2Array([Vector2(0, 0), Vector2(global.WIDTH, 0), Vector2(global.WIDTH, global.HEIGHT), Vector2(0, global.HEIGHT)])
+	background.modulate = Color(0, 0, 0, 0.5)
+	background.global_position = Vector2(0, 0)
+	add_child(background)
+	background.z_index = -1
+	
 	cursor.polygon = PackedVector2Array([Vector2(0, -cursorH/2), Vector2(0, cursorH/2), Vector2(cursorW, cursorH/2), Vector2(cursorW, -cursorH/2)])
 	cursor.modulate = Color(0.5, 0.5, 0.5, 0.5)
 	cursor.global_position = Vector2(global.WIDTH - cursorW, cursorH/2)

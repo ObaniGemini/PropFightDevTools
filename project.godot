@@ -17,7 +17,9 @@ config/custom_user_dir_name="PropFight"
 config/features=PackedStringArray("4.3")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://logo_splash.png"
 config/icon="res://icon.png"
+boot_splash/minimum_display_time=250
 
 [autoload]
 
@@ -25,10 +27,10 @@ util="*res://Scenes/Main/util.gd"
 global="*res://Scenes/Main/global.gd"
 controls="*res://Scenes/Main/controls.gd"
 game="*res://Scenes/Main/game.gd"
+environment="*res://Scenes/Main/environment.tscn"
 config="*res://Scenes/Main/config.gd"
 camera="*res://Scenes/Main/camera.tscn"
 color="*res://Scenes/Main/color.gd"
-environment="*res://Scenes/Main/environment.tscn"
 debug="*res://Scenes/Main/debug.tscn"
 
 [debug]
@@ -46,7 +48,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ropesim/plugin.cfg")
+enabled=PackedStringArray("res://addons/ropesim/plugin.cfg", "res://addons/very-simple-twitch/plugin.cfg")
 
 [filesystem]
 
@@ -85,6 +87,7 @@ ui_cancel={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
 ui_left={
@@ -201,10 +204,6 @@ music_next={
 
 pointing/emulate_mouse_from_touch=false
 
-[internationalization]
-
-
-
 [layer_names]
 
 2d_render/layer_1="general"
@@ -240,4 +239,3 @@ abberation={
 "type": "float",
 "value": 0.0
 }
-

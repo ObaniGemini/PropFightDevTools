@@ -4,22 +4,6 @@ enum { KEY, MOUSE, BTN, AXIS }
 
 enum { UP, LEFT, DOWN, RIGHT, CROSS, SQUARE, CIRCLE, TRIANGLE, COLOR, TEAM, INDICATOR, EMOTE1, EMOTE2 }
 
-const PS_GLYPHS := [
-	"res://Data/Textures/glyphs/dpad_up.png",
-	"res://Data/Textures/glyphs/dpad_left.png",
-	"res://Data/Textures/glyphs/dpad_down.png",
-	"res://Data/Textures/glyphs/dpad_right.png",
-	"res://Data/Textures/glyphs/ps_cross.png",
-	"res://Data/Textures/glyphs/ps_square.png",
-	"res://Data/Textures/glyphs/ps_circle.png",
-	"res://Data/Textures/glyphs/ps_triangle.png",
-	"res://Data/Textures/glyphs/ps4_button_share_sm.png",
-	"res://Data/Textures/glyphs/ps4_l1_sm.png",
-	"res://Data/Textures/glyphs/ps4_r1_sm.png",
-	"res://Data/Textures/glyphs/switchpro_lstick_click_md.png",
-	"res://Data/Textures/glyphs/switchpro_rstick_click_lg.png",
-]
-
 const actions_name : Array[String] = [
 	'up',
 	'left',
@@ -71,11 +55,11 @@ const joy_actions := [
 var keys := {}
 
 
-func controller_actions(_id) -> Array : return Array()
+func controller_actions(_id) -> Array : return []
 func key(_keycode) -> InputEventKey : return InputEventKey.new()
 func mouse_button(_btn) -> InputEventMouseButton : return InputEventMouseButton.new()
 func get_key_name(_action:Array, _mouse_prefix:String) -> String : return String()
-func get_action_set(_controller) -> Array : return Array()
+func get_action_set(_controller) -> Array : return []
 func change_key(_action, _array) : pass
 func set_keys(_k) : pass
 const JOY_BUTTON_L2 := JOY_BUTTON_LEFT_SHOULDER + 2
@@ -85,12 +69,17 @@ const JOY_BUTTON_R2 := JOY_BUTTON_RIGHT_SHOULDER + 2
 	#"res://Data/Textures/glyphs/xbox_a.png"
 #]
 
-func glyph(_id:int, _button:int) -> String : return String()
+func glyph(_id:int, _button:int) -> Texture : return Texture.new()
 func inputPressed(_c:int, _steam_action:int, _godot_action:String) -> bool : return bool()
 func inputJustPressed(_c:int, _steam_action:int, _godot_action:String) -> bool : return bool()
 func inputJustReleased(_c:int, _steam_action:int, _godot_action:String) -> bool : return bool()
-func controllers() -> Array : return Array()
-const IGNORE_CONTROLLERS := ["Touchpad", "Glide"]
+func _ready() : pass
+func controllers() -> Array : return []
+var GODOT_CONTROLLERS := []
+func __godot_controller(_id:int, _connected:bool) : pass
 func _controller(_id:int, _connected:bool) : pass
 func setGodotInput(_on:bool) : pass
 func setMenu(_boolean:bool) : pass
+var previous_mouse_pos := Vector2()
+var mouse_moved := false
+func _process(_delta:float) : pass

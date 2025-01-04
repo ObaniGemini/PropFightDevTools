@@ -14,7 +14,23 @@ const plyColors := [
 	Color8(255, 140, 200), #pink
 	Color8(255, 255, 255), #white
 	Color8(150, 150, 150), #gray
+	Color(-5, -5, -5),
+	Color(7, 0, 0),
+	Color(0, 5, 0),
+	Color(0, 0, 8),
+	Color(4, 4, 4)
 ]
+
+const FOLDERS := ["Backgrounds", "Events", "Props", "Levels", "Killscreens", "Powerups"]
+const BACKGROUNDS := FOLDERS[0]
+const EVENTS := FOLDERS[1]
+const PROPS := FOLDERS[2]
+const LEVELS := FOLDERS[3]
+const KILLSCREENS := FOLDERS[4]
+const POWERUPS := FOLDERS[5]
+
+
+const BASE_NUM_COLORS := 10
 
 const WIDTH := 1280
 const HEIGHT := 720
@@ -78,24 +94,24 @@ var teams := [
 	Team.new(5, Color8(255, 255, 255)),
 ]
 
-func playerStats(_playerID:int) -> Dictionary : return Dictionary()
+func playerStats(_playerID:int) -> Dictionary : return {}
 var num_players := 0
 var _internal_players := {}
 func _update_players_list() : pass
-func getPlayers() -> Array : return Array()
-func playerIds() -> Array : return Array()
+func getPlayers() -> Array : return []
+func playerIds() -> Array : return []
 func playerColor(_id:int) -> Color : return Color()
 func playersNumber() -> int : return int()
 func playersAlive() -> int : return int()
-func winnerInstances() -> Array : return Array()
+func winnerInstances() -> Array : return []
 func add_player(_id) -> Player : return Player.new()
 func remove_player(_id) -> Player : return Player.new()
 func switch_color(_id) : pass
 func mainListEmpty(_n:String, _a:Array) -> bool : return bool()
 func check_exists(_path:String, _should_create:bool) -> bool : return bool()
-func list_file_pathes(_folder:String, _extensions:PackedStringArray) -> Array : return Array()
+func list_file_pathes(_folder:String, _extensions:PackedStringArray) -> Array : return []
 func clear_players() : pass
 func get_file_name(_path:String) -> String : return String()
-func get_file_names(_scenesPathes:Array) -> Array : return Array()
+func get_file_names(_scenesPathes:Array) -> Array : return []
 func pause(_p) : pass
 func is_paused() -> bool : return bool()

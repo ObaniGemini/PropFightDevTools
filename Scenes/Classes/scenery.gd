@@ -1,4 +1,4 @@
-extends Node2D
+class_name Scenery extends Node2D
 
 @export var sounds : Array[Node]
 var sounds_base_volume : Array[float]

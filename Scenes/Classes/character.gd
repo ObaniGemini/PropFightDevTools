@@ -14,10 +14,19 @@ const BASE_STATS := {
 	"emotes": 0,
 }
 
-const Flying := 1 << 0
-const Big := 1 << 1
+enum PropSize {
+	Small = 1,
+	Medium = 2,
+	Big = 4
+}
 
-@export_flags("Flying:1", "Big:2") var prop_type := 0
+enum PropMovement {
+	Normal = 1,
+	Flying = 2
+}
+
+@export var size_type := PropSize.Medium
+@export var movement_type := PropMovement.Normal
 
 @export var CROSS := false
 @export var SQUARE := false
