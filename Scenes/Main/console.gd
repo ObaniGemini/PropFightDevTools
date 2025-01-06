@@ -22,6 +22,8 @@ func _ready():
 	add_child(cursor)
 
 func _process(_delta: float):
+	background.global_position.y = 0.0
+	
 	position.y = global.HEIGHT - size.y + pos
 	cursor.scale.y = cursorH/size.y
 	cursor.global_position.y = cursorH - (cursorH/2.0 + pos) * cursor.scale.y

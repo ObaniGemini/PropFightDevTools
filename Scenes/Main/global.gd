@@ -104,8 +104,8 @@ func playerColor(_id:int) -> Color : return Color()
 func playersNumber() -> int : return int()
 func playersAlive() -> int : return int()
 func winnerInstances() -> Array : return []
-func add_player(_id) -> Player : return Player.new()
-func remove_player(_id) -> Player : return Player.new()
+func add_player(_id) -> Player : return null
+func remove_player(_id) -> Player : return null
 func switch_color(_id) : pass
 func mainListEmpty(_n:String, _a:Array) -> bool : return bool()
 func check_exists(_path:String, _should_create:bool) -> bool : return bool()

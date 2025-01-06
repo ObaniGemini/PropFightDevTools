@@ -56,8 +56,8 @@ var keys := {}
 
 
 func controller_actions(_id) -> Array : return []
-func key(_keycode) -> InputEventKey : return InputEventKey.new()
-func mouse_button(_btn) -> InputEventMouseButton : return InputEventMouseButton.new()
+func key(_keycode) -> InputEventKey : return null
+func mouse_button(_btn) -> InputEventMouseButton : return null
 func get_key_name(_action:Array, _mouse_prefix:String) -> String : return String()
 func get_action_set(_controller) -> Array : return []
 func change_key(_action, _array) : pass
@@ -69,7 +69,7 @@ const JOY_BUTTON_R2 := JOY_BUTTON_RIGHT_SHOULDER + 2
 	#"res://Data/Textures/glyphs/xbox_a.png"
 #]
 
-func glyph(_id:int, _button:int) -> Texture : return Texture.new()
+func glyph(_id:int, _button:int) -> Texture : return null
 func inputPressed(_c:int, _steam_action:int, _godot_action:String) -> bool : return bool()
 func inputJustPressed(_c:int, _steam_action:int, _godot_action:String) -> bool : return bool()
 func inputJustReleased(_c:int, _steam_action:int, _godot_action:String) -> bool : return bool()
