@@ -15,7 +15,7 @@ func rotate(_ent, _force:float) : pass
 func push(_ent, _vforce:float, _hforce:float, _rotforce:float) : pass
 func area_explosion(_body, _node, _force_player:float, _force:float) : pass
 func set_glyph_sprite(_node:Sprite2D, _size:Vector2, _controller:int, _steam_action_set:int, _steam_action:int, _godot_button:int) : pass
-func make_glyph_display(_playerID:int, _size:float, _btn:Glyph.Type, _offset:Vector2) -> Node2D : return null
+func make_glyph_display(_playerID:int, _size:float, _btn:Glyph.Type, _offset:Vector2) : pass
 func clean_tween(_t) : pass
 func make_tween(_bound:Node, _t:=Tween.TRANS_LINEAR, _e:=Tween.EASE_OUT, _p:=false, _m:=Tween.TWEEN_PROCESS_IDLE) -> Tween : return create_tween()
 func tween_sound(_node:AudioStreamPlayer, _volume:float, _time:float) -> Tween : return create_tween()
