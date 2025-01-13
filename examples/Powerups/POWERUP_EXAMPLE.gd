@@ -1,4 +1,4 @@
-extends "res://Scenes/Classes/powerup_class.gd"
+extends Powerup
 
 
 func active(id):

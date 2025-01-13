@@ -96,7 +96,6 @@ autoplay = "idle"
 stream = ExtResource("2_kifb6")
 volume_db = -5.0
 pitch_scale = 0.75
-bus = &"Main"
 
 [node name="Label" type="Label" parent="AudioStreamPlayer"]
 offset_top = -96.0

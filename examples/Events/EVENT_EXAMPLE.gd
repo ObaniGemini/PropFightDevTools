@@ -1,4 +1,4 @@
-extends "res://Scenes/Classes/events.gd"
+extends Event
 
 const FORCE := 1500.0
 

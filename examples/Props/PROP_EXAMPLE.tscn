@@ -12,8 +12,8 @@ size = Vector2(64, 64)
 
 [node name="PropExample" type="RigidBody2D" groups=["player"]]
 physics_material_override = SubResource("1")
-max_contacts_reported = 1
 contact_monitor = true
+max_contacts_reported = 1
 linear_damp = 0.25
 angular_damp = 1.0
 script = ExtResource("1")

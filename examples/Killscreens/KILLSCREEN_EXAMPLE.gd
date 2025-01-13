@@ -1,4 +1,4 @@
-extends "res://Scenes/Classes/killscreen.gd"
+extends Killscreen
 
 # A killscreen is just a scene that's supposed to kill people in some way if the game lasts too long.
 # This avoids stalling and should preferably not just be "die" but something that forces you to move (the base game has some good examples imo)

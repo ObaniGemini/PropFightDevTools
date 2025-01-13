@@ -1,4 +1,4 @@
-extends "res://Scenes/Classes/character.gd"
+extends Character
 
 const ROT_FORCE := 50000.0
 const AIR_ROT_FORCE := 2000.0
