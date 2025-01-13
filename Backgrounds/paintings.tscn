@@ -1,0 +1,94 @@
+[gd_scene load_steps=16 format=3 uid="uid://drwam77rip4xe"]
+
+[ext_resource type="Script" path="res://Backgrounds/paintings/painting_landscapes.gd" id="1_qllf0"]
+[ext_resource type="Texture2D" uid="uid://cy6cmswxmsxy4" path="res://Backgrounds/paintings/cole-evening-in-arcadia.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bbuua70ttkoum" path="res://Backgrounds/paintings/california-landscape.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://dh6vc0b6ab23g" path="res://Backgrounds/paintings/Thomas Moron - Autumn on the Wissahickon.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://begsfovokw4rr" path="res://Backgrounds/paintings/max-weyl_landscape.png" id="6"]
+[ext_resource type="AudioStream" uid="uid://behvganmihrwi" path="res://Backgrounds/paintings/birds_chirping.ogg" id="7"]
+[ext_resource type="Texture2D" uid="uid://chfwaw336ihpu" path="res://Backgrounds/paintings/1882c Gates of the Yosemite.png" id="11_vpe1s"]
+
+[sub_resource type="Shader" id="1"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise;
+uniform sampler2D noise2;
+
+void fragment() {
+	float t = TIME * 0.04;
+	
+	vec4 p = texture(noise, vec2(cos(UV.x + t), sin(UV.y + t)));
+	
+	float fact1 = 0.005 + p.b * 0.005;
+	float fact2 = 0.005;
+	
+	COLOR.rgb = texture(TEXTURE, vec2(UV.x + sin(t + UV.y * 10.0 + p.r) * fact1, UV.y + cos(t + UV.x * 13.0 + p.g) * fact2)).rgb;
+	COLOR.b *= 1.0 + sin(t * 0.17) * 0.125;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_81vsi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2ngsx"]
+width = 64
+height = 64
+as_normal_map = true
+noise = SubResource("FastNoiseLite_81vsi")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8lwxi"]
+frequency = 0.0616
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xapg6"]
+width = 128
+height = 128
+seamless = true
+noise = SubResource("FastNoiseLite_8lwxi")
+
+[sub_resource type="ShaderMaterial" id="2"]
+shader = SubResource("1")
+shader_parameter/noise = SubResource("NoiseTexture2D_2ngsx")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_xapg6")
+
+[sub_resource type="SpriteFrames" id="3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_vpe1s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2i6sx"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("7")
+
+[node name="Paintings" type="Node2D" node_paths=PackedStringArray("sounds")]
+script = ExtResource("1_qllf0")
+TIME_MIN = 2
+TIME_RANGE = 4
+sounds = [NodePath("AudioStreamPlayer")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("2")
+position = Vector2(640, 360)
+scale = Vector2(1.4, 1.4)
+sprite_frames = SubResource("3")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_2i6sx")
+volume_db = -15.0
+autoplay = true
