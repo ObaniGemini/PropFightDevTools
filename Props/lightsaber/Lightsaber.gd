@@ -67,7 +67,7 @@ func update_color():
 	glyph.modulate = self_color
 
 const ANGLE_ROT_MAX := PI/8
-func physics(delta: float):
+func _physics_process(delta: float):
 	if opened:
 		var play_hit := false
 		for body in $saber.get_overlapping_bodies():
