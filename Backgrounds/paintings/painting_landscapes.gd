@@ -1,4 +1,4 @@
-extends "res://Scenes/Classes/background.gd"
+extends Background
 
 const TIME := 35
 

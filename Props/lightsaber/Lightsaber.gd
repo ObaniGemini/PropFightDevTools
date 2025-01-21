@@ -1,4 +1,4 @@
-extends Character
+extends Prop
 
 const FLY_FORCE := 3000.0
 const CONSTANT_ROT_FORCE := 40000.0

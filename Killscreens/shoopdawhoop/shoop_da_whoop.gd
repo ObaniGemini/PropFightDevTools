@@ -67,7 +67,7 @@ func move_rotation():
 
 func _on_body_entered(body):
 	if detecting and body.is_in_group(util.PLAYER_GROUP):
-		body.kill()
+		game.kill(body)
 
 
 func _process(_delta: float):

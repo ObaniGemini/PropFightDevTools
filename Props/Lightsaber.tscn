@@ -286,6 +286,7 @@ movement_type = 2
 CROSS = true
 SQUARE = true
 CIRCLE = true
+TRIANGLE = null
 
 [node name="ForcePush" type="Area2D" parent="."]
 position = Vector2(32, 0)
