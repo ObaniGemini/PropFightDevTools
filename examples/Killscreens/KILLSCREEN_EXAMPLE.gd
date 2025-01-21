@@ -8,4 +8,4 @@ func _ready():
 
 func kill(body):
 	if util.player(body):
-		body.kill()
+		game.kill(body)

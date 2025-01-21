@@ -63,10 +63,10 @@ class Player:
 	var team : Team
 	var colorID := -1
 	var score := 0
-	var instances : Array[Character] = []
+	var instances : Array[Prop] = []
 	var disconnected := false
 	var action_set : Array = []
-	var stats := Character.BASE_STATS.duplicate()
+	var stats := game.PLAYER_STATS.duplicate()
 	
 	
 	func _init(_ID:int=-1) : pass
@@ -82,7 +82,7 @@ class Team:
 	var score := 0
 	
 	func _init(_i:int, _m:Color) : pass
-	func indicator(_c:Character) : pass
+	func indicator(_p:Prop) -> TeamIndicator : return null
 	func remove_player(_ply:Player) : pass
 	func add_player(_ply:Player) : pass
 var teams := [
@@ -105,7 +105,7 @@ func playersNumber() -> int : return int()
 func playersAlive() -> int : return int()
 func winnerInstances() -> Array : return []
 func add_player(_id) -> Player : return null
-func remove_player(_id) -> Player : return null
+func remove_player(_id:int) -> Player : return null
 func switch_color(_id) : pass
 func mainListEmpty(_n:String, _a:Array) -> bool : return bool()
 func check_exists(_path:String, _should_create:bool) -> bool : return bool()
