@@ -1,5 +1,6 @@
 class_name PowerupEffect extends Node2D
 
-var player: Character
+var player: Prop
 
-func stop() : pass
+func stop():
+	debug.dbg("POWERUP: " + name + " stop function not implemented")

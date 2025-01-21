@@ -14,6 +14,16 @@ enum Mode { Melee, Duel, Teams, Max }
 ### equals to -1 on init because it needs to have a value different from any enum to be properly initialized
 var mode : Mode = Mode.Max
 
+const PLAYER_STATS := {
+	"time_alive": 0.0,
+	"streak": 0,
+	"max_streak": 0,
+	"num_inputs": 0,
+	"distance": 0.0,
+	"powerups": 0,
+	"emotes": 0,
+}
+
 signal mode_changed(m: Mode)
 func update_mode(_m:Mode) : pass
 var dice := false
@@ -51,3 +61,4 @@ func set_gravity(_vec) : pass
 var _time_scale_tween : Tween
 var _goal_time_scale := 1.0
 func set_time_scale(_time:float, _override:=-1.0) : pass
+func kill(_p:Prop) : pass

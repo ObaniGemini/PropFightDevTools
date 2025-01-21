@@ -1,4 +1,4 @@
-extends Character
+extends Prop
 
 const ROT_FORCE := 50000.0
 const AIR_ROT_FORCE := 2000.0
@@ -9,10 +9,9 @@ const JUMP_FORCE := 700.0
 
 func _ready():
 	body_entered.connect(hit)
-	set_physics_process(true)
 
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	if land_or_water():
 		rotate_player(movement.x * delta * ROT_FORCE)
 		

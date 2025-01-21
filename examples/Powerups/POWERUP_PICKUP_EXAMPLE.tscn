@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://ctndq7rxrbxa8"]
 
-[ext_resource type="Script" path="res://examples/Powerups/POWERUP_EXAMPLE.gd" id="1_duyo7"]
+[ext_resource type="Script" path="res://Scenes/Classes/powerup_pickup.gd" id="1_ndj32"]
 
 [node name="PowerupExample" type="Node2D"]
-script = ExtResource("1_duyo7")
+script = ExtResource("1_ndj32")
+type = 1
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(80, 80)
