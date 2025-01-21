@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://j6i3g0myp1a7"]
+[gd_scene load_steps=7 format=3 uid="uid://j6i3g0myp1a7"]
 
 [ext_resource type="Script" path="res://Scenes/Classes/background.gd" id="1_v8w58"]
 [ext_resource type="AudioStream" uid="uid://d21hkjobhvb2n" path="res://examples/Backgrounds/BACKGROUND_EXAMPLE/ambiencesoundtext.ogg" id="2_kifb6"]
+[ext_resource type="PackedScene" uid="uid://17w16q4jh8m4" path="res://examples/Backgrounds/BACKGROUND_EXAMPLE/FOREGROUND_EXAMPLE.tscn" id="2_q21xp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7du01"]
 font_size = 128
@@ -43,6 +44,7 @@ _data = {
 
 [node name="BackgroundExample" type="Node2D"]
 script = ExtResource("1_v8w58")
+FRONT_LAYER = ExtResource("2_q21xp")
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(1280, 360)

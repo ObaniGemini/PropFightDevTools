@@ -35,11 +35,9 @@ func press(t: String):
 	$Signal.modulate.a = 1.0
 	tween_press.tween_property($Signal, "modulate:a", 0.0, 1.0)
 
-# 'jumping' is set true just before 'cross()' is called and to false just before 'uncross()' is called
 func cross(): press("cross")
 func uncross(): press("uncross")
 
-# signal 'shoot' is emitted just before 'square()' is called
 func square(): press("square")
 func unsquare(): press("unsquare")
 
