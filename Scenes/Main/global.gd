@@ -51,6 +51,7 @@ const CUSTOM_MODPACKS_FOLDER := "custom-modpack="
 @onready var STEAM : bool = true && !IS_EDITOR
 @onready var SANDBOX : bool = STEAM and OS.get_cmdline_user_args().has("sandbox")
 @onready var ADDON_CREATOR : bool = STEAM and !SANDBOX and OS.get_cmdline_user_args().has("addon-creator")
+@onready var SKIP_MODS_CHECK : bool = OS.get_cmdline_args().has("skip-check")
 
 @onready var MASTER_BUS := AudioServer.get_bus_index("Master")
 @onready var SFX_BUS := AudioServer.get_bus_index("SFX")
