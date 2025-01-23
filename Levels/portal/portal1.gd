@@ -42,4 +42,4 @@ func activate_gravity(boolean):
 
 func kill(body):
 	if util.player(body) && $decor/Node2D/door2.position.x > OPENED_POS/2:
-		body.kill()
+		game.kill(body)
