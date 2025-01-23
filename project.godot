@@ -17,7 +17,7 @@ config/custom_user_dir_name="PropFight"
 config/features=PackedStringArray("4.3")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="res://logo_splash.png"
+
 config/icon="res://icon.png"
 boot_splash/minimum_display_time=250
 

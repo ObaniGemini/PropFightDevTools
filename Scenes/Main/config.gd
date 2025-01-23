@@ -81,3 +81,4 @@ func reset_config() : pass
 func set_dictionary(_c:Dictionary, _default:Dictionary) : pass
 func load_config() : pass
 func save_config() : pass
+func _exit_tree() : pass

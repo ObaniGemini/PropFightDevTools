@@ -41,7 +41,7 @@ func clear():
 	text = ""
 	pos = 0.0
 	size.y = global.HEIGHT
-	debug.dbg("CONSOLE: cleared")
+	add_line("CONSOLE: cleared")
 
 func move_cursor(speed: float):
 	pos = clampf(pos + speed, 0.0, size.y - global.HEIGHT)

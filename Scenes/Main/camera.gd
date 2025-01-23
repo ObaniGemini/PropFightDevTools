@@ -20,3 +20,4 @@ const d := 1.0/global.WIDTH
 func place_camera() -> Vector2 : return Vector2()
 var zoom_speed := Vector2(0, 0)
 func _process(_delta:float) : pass
+func _exit_tree() : pass
