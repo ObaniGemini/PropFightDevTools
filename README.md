@@ -5,6 +5,4 @@ This repository serves as a ground for modding [PropFight](https://store.steampo
 You need to download [Godot](https://godotengine.org/) to access the editor used in modding and for exporting packs.
 *The current Godot version we use is 4.3 stable*
 
-**You can't run or export this project with godot, it's just used to edit and export resource packs for the game**
-
-If you want to test your addons, you'll need to run them in-game.
+#### To learn more about how to use this repository, check our [wiki](https://github.com/ObaniGemini/PropFightDevTools/wiki)
