@@ -19,7 +19,7 @@ var input := true
 var in_liquid := false
 
 var jump_force := 1.0
-var reverted := 1.0
+var movement_factor := 1.0
 var movement := Vector2(0, 0)
 
 
@@ -56,7 +56,7 @@ func jump(vforce : float, hforce : float, rotforce : float, apply_force_boost :=
 		force_tween.tween_property(self, "force", 1, 0.25)
 
 var _last_hit_vel := Vector2()
-func hit_push(body, vel, reduce=0.0):
+func hit_push(body, vel: Vector2, reduce := 0.0):
 	var f = force * jump_force
 	body.apply_impulse(vel * f, Vector2(0, 0))
 	if util.player(body):
@@ -64,8 +64,8 @@ func hit_push(body, vel, reduce=0.0):
 		_last_hit_vel = body.linear_velocity
 
 var _last_hit_angle_vel := 0.0
-func hit_rotate(body, vel, reduce=0.0):
-	var f = vel * force * jump_force
+func hit_rotate(body, f: float, reduce := 0.0):
+	f *= force * jump_force
 	util.rotate(body, f)
 	if util.player(body):
 		body.force_reduce(absf(f) * reduce)
@@ -91,6 +91,36 @@ func restart_tween():
 		scale_tween.tween_property(node, "scale", tween_nodes[node], 0.25)
 
 
+
+func fastfall(vel: float) -> float: return maxf(0, movement.y) * vel
+func water() -> bool: return in_liquid 
+
+func on_player() -> bool:
+	for body in get_colliding_bodies():
+		if util.player(body): #if a player, then it's not ok
+			return true
+	return false
+
+func land(on_ply := true) -> bool:
+	var count := 0
+	var bodies := get_colliding_bodies()
+	for body in bodies:
+		if body.is_in_group("nojump") or (!on_ply and util.player(body)):
+			count += 1
+	return bodies.size() > count
+
+func land_or_water(on_ply := true) -> bool:
+	return land(on_ply) || water() 
+
+
+
+func set_side(obj: CanvasItem, side : int):
+	obj.scale.x = absf(obj.scale.x) * side
+	if tween_nodes.has(obj):
+		tween_nodes[obj].x = absf(tween_nodes[obj].x) * side
+
+
+
 func update_color():
 	modulate = self_color
 
@@ -108,43 +138,4 @@ func triangle(): pass
 func untriangle(): pass
 
 
-
-func jump_fx(): pass
-
-
-func set_side(obj, side : int):
-	obj.scale.x = absf(obj.scale.x) * side
-	if tween_nodes.has(obj):
-		tween_nodes[obj].x = absf(tween_nodes[obj].x) * side
-
-
-
-func _notification(what: int):
-	if what != NOTIFICATION_INTERNAL_PHYSICS_PROCESS:
-		return
-	
-	if is_physics_processing():
-		set_physics_process(false)
-
 func _physics_process(_delta: float): pass #to override
-
-func fastfall(vel) -> float: return maxf(0, movement.y) * vel
-
-func water() -> bool: return in_liquid 
-
-func on_player() -> bool:
-	for body in get_colliding_bodies():
-		if util.player(body): #if a player, then it's not ok
-			return true
-	return false
-
-func land(on_ply=true) -> bool:
-	var count := 0
-	var bodies := get_colliding_bodies()
-	for body in bodies:
-		if body.is_in_group("nojump") or (!on_ply and util.player(body)):
-			count += 1
-	return bodies.size() > count
-
-func land_or_water(on_ply=true) -> bool:
-	return land(on_ply) || water() 
