@@ -23,6 +23,7 @@ boot_splash/minimum_display_time=250
 
 [autoload]
 
+debug="*res://Scenes/Main/debug.tscn"
 util="*res://Scenes/Main/util.gd"
 global="*res://Scenes/Main/global.gd"
 controls="*res://Scenes/Main/controls.gd"
@@ -31,7 +32,6 @@ environment="*res://Scenes/Main/environment.tscn"
 config="*res://Scenes/Main/config.gd"
 camera="*res://Scenes/Main/camera.tscn"
 color="*res://Scenes/Main/color.gd"
-debug="*res://Scenes/Main/debug.tscn"
 
 [debug]
 
