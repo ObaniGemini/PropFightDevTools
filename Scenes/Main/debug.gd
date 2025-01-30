@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-
+@onready var console = $Console
 
 func _ready() : pass
 func dbg(_s:String) : pass

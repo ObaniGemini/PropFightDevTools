@@ -1,10 +1,13 @@
 class_name Prop extends RigidBody2D
 
+const DEFAULT_SIZE := PropSize.Medium
+const DEFAULT_MOVEMENT := PropMovement.Normal
+
 enum PropSize { Small = 1, Medium = 2, Big = 4 }
 enum PropMovement { Normal = 1, Flying = 2 }
 
-@export var size_type := PropSize.Medium
-@export var movement_type := PropMovement.Normal
+@export var size_type := DEFAULT_SIZE
+@export var movement_type := DEFAULT_MOVEMENT
 
 @export var CROSS := false
 @export var SQUARE := false
