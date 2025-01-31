@@ -20,7 +20,7 @@ func _ready():
 	$AudioStreamPlayer2D.play()
 
 
-func stop():
+func exit():
 	if is_instance_valid(player) and !player.is_physics():
 		player.gravity_scale = gravity_scale
 		player.linear_damp = linear_damp
