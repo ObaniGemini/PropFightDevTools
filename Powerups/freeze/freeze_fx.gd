@@ -5,7 +5,6 @@ var linear_damp : float
 var angular_damp : float
 
 func _ready():
-	player.set_physics(false)
 	gravity_scale = player.gravity_scale
 	linear_damp = player.linear_damp
 	angular_damp = player.angular_damp
@@ -21,8 +20,7 @@ func _ready():
 
 
 func exit():
-	if is_instance_valid(player) and !player.is_physics():
+	if is_instance_valid(player):
 		player.gravity_scale = gravity_scale
 		player.linear_damp = linear_damp
 		player.angular_damp = angular_damp
-		player.set_physics(true)

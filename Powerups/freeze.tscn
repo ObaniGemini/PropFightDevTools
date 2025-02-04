@@ -66,7 +66,8 @@ _data = {
 [node name="Freeze" type="Node2D"]
 script = ExtResource("1_0qd6v")
 effect = ExtResource("2_uskoc")
-time = 2.5
+can_duplicate = false
+time = 2.0
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 0.25)
