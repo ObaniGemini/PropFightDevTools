@@ -1,0 +1,78 @@
+[gd_scene load_steps=19 format=3 uid="uid://hpx7oxs2dtge"]
+
+[ext_resource type="Script" path="res://Props/companioncube/companion_cube.gd" id="1_8apqe"]
+[ext_resource type="AudioStream" uid="uid://bdxvcknt001oo" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_01.ogg" id="2_mekrg"]
+[ext_resource type="Texture2D" uid="uid://cpywmj2ogm0fb" path="res://Props/companioncube/sprite.png" id="2_ygmny"]
+[ext_resource type="Texture2D" uid="uid://w2ukoo0rq1vs" path="res://Props/companioncube/colors.png" id="3_fibmc"]
+[ext_resource type="AudioStream" uid="uid://7eys2as77ush" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_02.ogg" id="3_j27vw"]
+[ext_resource type="AudioStream" uid="uid://cowugv67p7smh" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_03.ogg" id="4_et8vb"]
+[ext_resource type="AudioStream" uid="uid://b0ncw0u186rcx" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_04.ogg" id="5_4odco"]
+[ext_resource type="AudioStream" uid="uid://cb3gii1x0vty6" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_06.ogg" id="7_4udja"]
+[ext_resource type="AudioStream" uid="uid://brrb1p2edr6vp" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_07.ogg" id="8_2x85q"]
+[ext_resource type="AudioStream" uid="uid://1aadnifbrfwn" path="res://Props/companioncube/jump/sound_physics_cube_phys_cube_sm_01.ogg" id="11_woe5l"]
+[ext_resource type="AudioStream" uid="uid://ctcqxu3tipgaw" path="res://Props/companioncube/jump/sound_physics_cube_phys_cube_sm_02.ogg" id="12_ecawr"]
+[ext_resource type="AudioStream" uid="uid://rbjlcqknu43e" path="res://Props/companioncube/jump/sound_physics_cube_phys_cube_sm_03.ogg" id="13_xd6gm"]
+[ext_resource type="AudioStream" uid="uid://dc4pk53jpqao4" path="res://Props/companioncube/jump/sound_physics_cube_phys_cube_sm_04.ogg" id="14_ebmnu"]
+[ext_resource type="AudioStream" uid="uid://boyun82k8hctp" path="res://Props/companioncube/jump/sound_physics_cube_phys_cube_sm_07.ogg" id="15_iuplx"]
+[ext_resource type="AudioStream" uid="uid://b865vqqlttwy7" path="res://Props/companioncube/jump/sound_physics_cube_phys_cube_sm_09.ogg" id="16_ycusy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ulu62"]
+friction = 0.9
+bounce = 0.1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0fjpd"]
+random_pitch = 1.25
+streams_count = 6
+stream_0/stream = ExtResource("2_mekrg")
+stream_1/stream = ExtResource("3_j27vw")
+stream_2/stream = ExtResource("4_et8vb")
+stream_3/stream = ExtResource("5_4odco")
+stream_4/stream = ExtResource("7_4udja")
+stream_5/stream = ExtResource("8_2x85q")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ppm7p"]
+random_pitch = 1.25
+streams_count = 6
+stream_0/stream = ExtResource("11_woe5l")
+stream_1/stream = ExtResource("12_ecawr")
+stream_2/stream = ExtResource("13_xd6gm")
+stream_3/stream = ExtResource("14_ebmnu")
+stream_4/stream = ExtResource("15_iuplx")
+stream_5/stream = ExtResource("16_ycusy")
+
+[node name="CompanionCube" type="RigidBody2D"]
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_ulu62")
+gravity_scale = 1.9
+contact_monitor = true
+max_contacts_reported = 1
+angular_damp = 2.0
+script = ExtResource("1_8apqe")
+CROSS = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_ygmny")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("3_fibmc")
+
+[node name="ground" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_0fjpd")
+volume_db = -8.0
+attenuation = 0.5
+max_polyphony = 2
+panning_strength = 0.5
+bus = &"SFX"
+
+[node name="jump" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_ppm7p")
+volume_db = 2.0
+attenuation = 0.5
+max_polyphony = 2
+panning_strength = 0.5
+bus = &"SFX"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-11, -32, 11, -32, 14.5, -35.5, 33, -35.5, 35.5, -33, 35.75, -14.5, 32, -11, 32, 11, 35.5, 14.5, 35.5, 33, 33, 35.5, 14.5, 35.5, 11, 32, -11, 32, -14.5, 35.5, -33, 35.5, -35.5, 33, -35.5, 14.5, -32, 11, -32, -11, -35.5, -14.5, -35.5, -33, -33, -35.5, -14.5, -35.5)
