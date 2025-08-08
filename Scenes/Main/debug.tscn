@@ -1,13 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://bovwokf65pkxg"]
 
-[ext_resource type="Script" path="res://Scenes/Main/debug.gd" id="1_e5ukc"]
-[ext_resource type="Script" path="res://Scenes/Main/console.gd" id="2_7gm66"]
+[ext_resource type="Script" uid="uid://cswt7sgbsni6" path="res://Scenes/Main/debug.gd" id="1_e5ukc"]
+[ext_resource type="Script" uid="uid://d3jpcvxgmeddp" path="res://Scenes/Main/console.gd" id="2_7gm66"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2og3g"]
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Debug" type="CanvasLayer"]
+process_mode = 3
 layer = 128
 script = ExtResource("1_e5ukc")
 

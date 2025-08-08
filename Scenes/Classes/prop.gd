@@ -35,7 +35,7 @@ func rotate_player(f : float):
 func stronger_than(b) -> bool:
 	if !util.player(b):
 		return true
-	return linear_velocity.length() * jump_force * force > b.linear_velocity.length() * b.jump_force * b.force
+	return _last_linear_velocity.length() * jump_force * force > b._last_linear_velocity.length() * b.jump_force * b.force
 
 ### Reduce power
 #@onready var JUMP_FORCE_BOOST = config.param("jumpForce")
@@ -57,6 +57,8 @@ func jump(vforce : float, hforce : float, rotforce : float, apply_force_boost :=
 		force *= JUMP_FORCE_BOOST
 		force_tween = util.make_tween(self, Tween.TRANS_LINEAR, Tween.EASE_OUT, false, Tween.TWEEN_PROCESS_PHYSICS)
 		force_tween.tween_property(self, "force", 1, 0.25)
+
+var _last_linear_velocity := Vector2()
 
 var _last_hit_vel := Vector2()
 func hit_push(body, vel: Vector2, reduce := 0.0):

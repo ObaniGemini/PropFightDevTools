@@ -4,7 +4,7 @@ uniform sampler2D outlined_texture : filter_nearest, repeat_enable;
 uniform float precision : hint_range(1.0, 8.0, 1.0);
 
 const vec2 OUTLINE_SIZE = vec2(4.0)/vec2(1280.0, 720.0);
-const float ALPHA_THRESHOLD = 0.001;
+const float ALPHA_THRESHOLD = 0.0001;
 
 vec4 TEX(sampler2D tex, vec2 uv) {
 	return (uv.x < 0.0 || uv.y < 0.0 || uv.x > 1.0 || uv.y > 1.0) ?
@@ -13,7 +13,13 @@ vec4 TEX(sampler2D tex, vec2 uv) {
 }
 
 void fragment() {
-	float alpha = texture(outlined_texture, SCREEN_UV).a;
+	vec2 OFFSET = SCREEN_PIXEL_SIZE;
+	float alpha = mix(texture(outlined_texture, SCREEN_UV).a,
+				mix(texture(outlined_texture, SCREEN_UV + OFFSET).a,
+				mix(texture(outlined_texture, SCREEN_UV - OFFSET).a,
+				mix(texture(outlined_texture, SCREEN_UV + vec2(-OFFSET.x, OFFSET.y)).a,
+					texture(outlined_texture, SCREEN_UV + vec2(OFFSET.x, -OFFSET.y)).a, 0.5), 0.5), 0.5),
+				0.35);
 	vec2 offset = max(SCREEN_PIXEL_SIZE, OUTLINE_SIZE/precision);
 
 	COLOR.a = 0.0;
