@@ -8,23 +8,26 @@
 
 config_version=5
 
+[animation]
+
+warnings/check_invalid_track_paths=false
+warnings/check_angle_interpolation_type_conflicting=false
+
 [application]
 
 config/name="PropFightDevTools"
 run/main_scene="res://ModTester.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="PropFight"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.4")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
-
 config/icon="res://icon.png"
 boot_splash/minimum_display_time=250
 
 [autoload]
 
 debug="*res://Scenes/Main/debug.tscn"
-util="*res://Scenes/Main/util.gd"
 global="*res://Scenes/Main/global.gd"
 controls="*res://Scenes/Main/controls.gd"
 game="*res://Scenes/Main/game.gd"
@@ -35,6 +38,7 @@ color="*res://Scenes/Main/color.gd"
 
 [debug]
 
+file_logging/enable_file_logging=true
 gdscript/warnings/return_value_discarded=false
 gdscript/warnings/integer_division=false
 gdscript/warnings/narrowing_conversion=false
@@ -48,7 +52,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ropesim/plugin.cfg", "res://addons/very-simple-twitch/plugin.cfg")
+enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addons/ropesim/plugin.cfg", "res://addons/twitcher/plugin.cfg")
 
 [filesystem]
 
@@ -199,14 +203,25 @@ music_next={
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+backspace_all={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194308,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+validate={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194309,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+test={
+"deadzone": 0.2,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
+]
+}
 
 [input_devices]
 
 pointing/emulate_mouse_from_touch=false
-
-[internationalization]
-
-
 
 [layer_names]
 
@@ -223,13 +238,14 @@ pointing/emulate_mouse_from_touch=false
 [physics]
 
 2d/default_gravity=1960
+common/physics_interpolation=true
 3d/active_soft_world=false
 2d/large_object_surface_threshold_in_cells=128
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 viewport/hdr_2d=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 quality/intended_usage/framebuffer_allocation=3
 threads/thread_model=2
 quality/reflections/texture_array_reflections=false
@@ -243,4 +259,19 @@ abberation={
 "type": "float",
 "value": 0.0
 }
+screen_size={
+"type": "vec2",
+"value": Vector2(1280, 720)
+}
 
+[twitch]
+
+auth/authorization_flow="ImplicitGrantFlow"
+auth/client_id="imt4up69sxdero2ftgrxugkluozdvn"
+auth/scopes/chat=3
+auth/scopes/channel=0
+general/logging/enabled=2047
+websocket/irc/username="PropFightBot"
+websocket/irc/login_message="I'm in the games"
+auth/scopes/user=14336
+auth/scopes/whispers=3

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://drqt5pn6bgbt2"]
+
+[ext_resource type="FontFile" uid="uid://bcrbes6x5jlea" path="res://Data/Fonts/gnuolane rg.ttf" id="1_w11e8"]
+[ext_resource type="Script" uid="uid://duayav3vlroj8" path="res://Scenes/Effects/color_indicator.gd" id="1_y6akr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3llxa"]
+font = ExtResource("1_w11e8")
+font_size = 192
+outline_size = 48
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ColorIndicator" type="Node2D"]
+script = ExtResource("1_y6akr")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, 128)
+
+[node name="Node2D" type="Node2D" parent="Node2D"]
+
+[node name="Label" type="Label" parent="Node2D/Node2D"]
+offset_right = 253.0
+offset_bottom = 232.0
+scale = Vector2(0.25, 0.25)
+label_settings = SubResource("LabelSettings_3llxa")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

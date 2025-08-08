@@ -1,6 +1,6 @@
 class_name Scenery extends Node2D
 
-const FADE_TIME := 1
+const FADE_TIME := 1.0
 @export var sounds : Array[Node]
 var sounds_base_volume : Array[float]
 
