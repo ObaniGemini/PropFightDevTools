@@ -1,4 +1,4 @@
-class_name util extends Node
+class_name util
 
 class TimeOutTimer:
 	var _t: SceneTreeTimer
@@ -191,5 +191,4 @@ static func set_bullet(body): body.add_to_group(BULLET_GROUP)
 const FLYING_GROUP := "flying"
 static func flying(body) -> bool: return body.is_in_group(FLYING_GROUP)
 static func set_flying(body): body.add_to_group(FLYING_GROUP)
-
 

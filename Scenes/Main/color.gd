@@ -1,4 +1,4 @@
-extends Node
+extends MainNode
 
 var shaders := []
 
@@ -15,5 +15,4 @@ func remove(_node:Node2D) : pass
 
 
 func clear() : pass
-
 

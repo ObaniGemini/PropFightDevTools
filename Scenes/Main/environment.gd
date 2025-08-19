@@ -1,4 +1,4 @@
-extends WorldEnvironment
+extends MainNode
 
 @onready var base_viewport := get_viewport()
 @onready var outline := $LevelOutline/ColorRect
@@ -19,5 +19,4 @@ func set_high_quality(_b:bool) : pass
 func set_viewport(_viewport:SubViewport) : pass
 
 func update_size() : pass
-
 

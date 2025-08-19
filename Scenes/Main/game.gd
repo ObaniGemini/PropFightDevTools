@@ -1,4 +1,4 @@
-class_name Game extends Node2D
+class_name Game extends MainNode
 
 signal powerup_added(p: Powerup)
 signal event_added(e: Event)
@@ -98,5 +98,4 @@ func _transition_time(_time:float, _override:=-1.0) : pass
 func _process(_delta:float) -> void : return 
 
 func kill(_p:Prop) : pass
-
 

@@ -6,6 +6,11 @@ const DEFAULT_MOVEMENT := PropMovement.Normal
 enum PropSize { Small = 1, Medium = 2, Big = 4 }
 enum PropMovement { Normal = 1, Flying = 2 }
 
+signal on_cross(boolean: bool)
+signal on_square(boolean: bool)
+signal on_circle(boolean: bool)
+signal on_triangle(boolean: bool)
+
 @export var size_type := DEFAULT_SIZE
 @export var movement_type := DEFAULT_MOVEMENT
 
