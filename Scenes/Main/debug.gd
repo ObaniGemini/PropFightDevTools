@@ -1,6 +1,6 @@
-extends CanvasLayer
+extends MainNode
 
-@onready var console = $Console
+@onready var console = $CanvasLayer/Console
 
 
 func dbg(_s:String) : pass

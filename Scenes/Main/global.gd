@@ -1,4 +1,4 @@
-extends Node
+extends MainNode
 
 const MAX_TEAMS := 2
 const MAX_PLAYERS := 8
@@ -175,5 +175,4 @@ func get_file_names(_scenesPathes:Array) -> Array : return []
 func pause(_p:bool) : pass
 
 func is_paused() -> bool : return bool()
-
 

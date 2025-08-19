@@ -1,4 +1,4 @@
-extends Node
+extends MainNode
 
 signal locale_update
 
@@ -111,5 +111,4 @@ func load_config() : pass
 
 
 func save_config() : pass
-
 
