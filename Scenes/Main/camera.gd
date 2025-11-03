@@ -2,21 +2,22 @@ class_name Camera extends Camera2D
 
 enum { ZOOM, SHAKE, ROT, COLOR }
 
-const property := ["custom_zoom", "shake", "rotation"]
+const property := ["custom_zoom", "shake", "rotation", "modulate"]
 
-var fallback := [Vector2(1.0, 1.0), 0.0, 0.0]
+var fallback := [Vector2(1.0, 1.0), 0.0, 0.0, Color(0, 0, 0, 0)]
 var center : Vector2 = position
 var custom_zoom : Vector2 = fallback[ZOOM]
 var shake : float = fallback[SHAKE]
-var abberation : float = 0.0
+var explosion : float = 0.0
 
 @onready var cams : Array[Camera2D] = []
 
 var level_zoom := Vector2(1.0, 1.0)
 
+
 func level_rescale() -> Vector2 : return Vector2()
 
-var t := [null, null, null, null]
+var t : Array[Tween] = [null, null, null, null]
 func screenshake(_type:int, _force, _length, _tween_curve=Tween.TRANS_ELASTIC) : pass
 
 
@@ -30,5 +31,3 @@ var zoom_inertia := zoom
 var zoom_speed := Vector2(0.0, 0.0)
 var zoom_normalized := Vector2(1.0, 1.0)
 func _process(_delta:float) : pass
-
-

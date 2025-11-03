@@ -26,4 +26,3 @@ func destroy() : pass
 func active(_id:int) : pass
 
 func pickup(_body) : pass
-

@@ -54,30 +54,26 @@ static func shoot_entity(shooter, node, start_pos : Vector2, rot : float, object
 	return node
 
 
-
-static func make_two_sided_polygon(node, PolygonNode : CollisionPolygon2D):
-	var parent := Node2D.new()
-	var polygon1 := CollisionPolygon2D.new()
-	var polygon2 := CollisionPolygon2D.new()
+class TwoSided:
+	enum Axis {
+		X,
+		Y,
+		Both
+	}
 	
-	parent.name = "two_sided"
-	polygon1.name = "1"
-	polygon2.name = "-1"
+	var sideMinus1: PackedVector2Array
+	var sidePlus1: PackedVector2Array
 	
-	polygon1.polygon = PolygonNode.polygon
-	polygon2.polygon = PolygonNode.polygon
+	func _init(_node:CollisionPolygon2D, _axis:=Axis.Both) : pass
 	
-	for i in polygon2.polygon.size():
-		polygon2.polygon[i].x = -polygon2.polygon[i].x
-	
-	parent.add_child(polygon1)
-	parent.add_child(polygon2)
-	node.add_child(parent)
+	func get_side(_side:int) -> PackedVector2Array : return PackedVector2Array()
 
 
 static func rands() -> float:
 	return signf((randi() % 2) * 2 - 1)
 
+static func maxampf(a: float, b : float):
+	return a if absf(a) > absf(b) else b
 
 static func rotate(ent, force : float):
 	ent.apply_torque_impulse(force * sign(game.gravity.y)) #not static
@@ -105,7 +101,7 @@ static func area_explosion(_body, node, force_player : float, force : float):
 				imp *= force_player
 			else:
 				imp *= force
-			body.apply_impulse(imp, Vector2(0, 0))
+			body.apply_impulse(imp, node.global_position - body.global_position)
 	
 	
 	node.linear_velocity = Vector2()
@@ -121,7 +117,7 @@ static func area_explosion(_body, node, force_player : float, force : float):
 	var shake_force := force * 0.000003 / (1.0 + dist * dist)
 	camera.screenshake(camera.ROT, rands() * shake_force, 0.75)
 	camera.screenshake(camera.SHAKE, shake_force * 2.0, 1.0)
-	camera.abberation += shake_force
+	camera.explosion += shake_force
 
 
 const FONTS := [
@@ -162,13 +158,6 @@ static func clean_tween(t: Tween):
 static func make_tween(bound: Node, t := Tween.TRANS_LINEAR, e := Tween.EASE_OUT, p := false, m := Tween.TWEEN_PROCESS_IDLE) -> Tween:
 	return bound.create_tween().set_trans(t).set_ease(e).set_parallel(p).set_process_mode(m)
 
-static func add_audio_effect(effect : AudioEffect, music_bus := false) -> int:
-	var bus := global.MUSIC_BUS if music_bus else global.MASTER_BUS
-	AudioServer.add_bus_effect(bus, effect)
-	return AudioServer.get_bus_effect_count(bus) - 1
-
-static func remove_audio_effect(idx: int, music_bus := false):
-	AudioServer.remove_bus_effect(global.MUSIC_BUS if music_bus else global.MASTER_BUS, idx)
 
 static func tween_sound(node: AudioStreamPlayer, volume: float, time: float) -> Tween:
 	var t := make_tween(node)
@@ -191,4 +180,3 @@ static func set_bullet(body): body.add_to_group(BULLET_GROUP)
 const FLYING_GROUP := "flying"
 static func flying(body) -> bool: return body.is_in_group(FLYING_GROUP)
 static func set_flying(body): body.add_to_group(FLYING_GROUP)
-

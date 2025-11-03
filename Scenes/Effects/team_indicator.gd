@@ -9,4 +9,3 @@ var t : Tween
 func die() : pass
 
 func _process(_delta:float) : pass
-

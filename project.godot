@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+curved_lines_2d/snap_to_pixel=false
+
 [animation]
 
 warnings/check_invalid_track_paths=false
@@ -19,7 +23,7 @@ config/name="PropFightDevTools"
 run/main_scene="res://ModTester.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="PropFight"
-config/features=PackedStringArray("4.4")
+config/features=PackedStringArray("4.5")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.png"
@@ -69,7 +73,7 @@ theme/custom_font="res://Data/Fonts/OpenSans-Semibold96.tres"
 [importer_defaults]
 
 animation_library={
-"animation/fps": 30.0
+&"animation/fps": 30.0
 }
 
 [input]
@@ -255,18 +259,24 @@ quality/filters/use_nearest_mipmap_filter=true
 
 [shader_globals]
 
-abberation={
-"type": "float",
-"value": 0.0
-}
 screen_size={
 "type": "vec2",
 "value": Vector2(1280, 720)
 }
+explosion={
+"type": "float",
+"value": 0.0
+}
+
+[steam]
+
+initialization/app_id=0
+initialization/initialize_on_startup=false
+initialization/embed_callbacks=false
 
 [twitch]
 
-auth/authorization_flow="ImplicitGrantFlow"
+auth/authorization_flow="DeviceCodeGrantFlow"
 auth/client_id="imt4up69sxdero2ftgrxugkluozdvn"
 auth/scopes/chat=3
 auth/scopes/channel=0
@@ -275,3 +285,10 @@ websocket/irc/username="PropFightBot"
 websocket/irc/login_message="I'm in the games"
 auth/scopes/user=14336
 auth/scopes/whispers=3
+
+[twitcher]
+
+editor/game_oauth_token="res://addons/twitcher/default_oauth_token.tres"
+editor/game_oauth_setting="res://addons/twitcher/twitch_oauth_setting.tres"
+editor/project_preset=&"Game"
+editor/show_setup_on_startup=false

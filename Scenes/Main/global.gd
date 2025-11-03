@@ -10,15 +10,17 @@ const plyColors := [
 	Color8(150, 220, 100), #green
 	Color8(140, 210, 255), #light blue
 	Color8(40, 100, 180), #blue
-	Color8(120, 115, 205), #violet
+	Color8(150, 131, 236), #violet
 	Color8(255, 170, 200), #pink
 	Color8(220, 220, 230), #white
 	Color8(120, 120, 140), #gray
+	Color8(147, 82, 35), #brown
 	Color(-5, -5, -5),
 	Color(7, 0, 0),
 	Color(0, 5, 0),
 	Color(0, 0, 8),
-	Color(4, 4, 4)
+	Color(4, 4, 4),
+	Color(1.0, 1.0, 1.0, 0.35)
 ]
 
 const plyColorsName := [
@@ -32,11 +34,13 @@ const plyColorsName := [
 	"PINK",
 	"WHITE",
 	"GRAY",
+	"BROWN",
 	"BLACK",
 	"BIG_RED",
 	"BIG_GREEN",
 	"BIG_BLUE",
-	"BIG_WHITE"
+	"BIG_WHITE",
+	"TRANSPARENT"
 ]
 
 const FOLDERS := ["Backgrounds", "Events", "Props", "Levels", "Killscreens", "Powerups"]
@@ -52,7 +56,8 @@ const BASE_NUM_COLORS := 10
 
 const WIDTH := 1280
 const HEIGHT := 720
-const center := Vector2(WIDTH, HEIGHT)/2.0
+const size := Vector2(WIDTH, HEIGHT)
+const center := size/2.0
 
 var paused := false
 
@@ -77,6 +82,15 @@ const SFX_BUS := 1
 const MUSIC_BUS := 3
 
 func load_packs(_folder:String) : pass
+
+enum Season {
+	None,
+	Autumn,
+	Winter
+}
+
+var season := Season.None
+func check_season() : pass
 
 
 
@@ -176,3 +190,13 @@ func pause(_p:bool) : pass
 
 func is_paused() -> bool : return bool()
 
+var _master_fx := {}
+var _music_fx := {}
+
+func add_audio_effect(_effect:AudioEffect, _music_bus:=false) : pass
+
+func remove_audio_effect(_effect:AudioEffect, _music_bus:=false) : pass
+
+func add_audio_effects(_effects:Array, _music_bus:=false) : pass
+
+func remove_audio_effects(_effects:Array, _music_bus:=false) : pass

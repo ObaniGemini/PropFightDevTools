@@ -6,7 +6,15 @@ uniform float precision : hint_range(1.0, 8.0, 1.0);
 const vec2 OUTLINE_SIZE = vec2(4.0)/vec2(1280.0, 720.0);
 const float ALPHA_THRESHOLD = 0.0001;
 
-vec4 TEX(sampler2D tex, vec2 uv) {
+
+float ign_noise(vec2 pos) {
+	return mod(52.9829189 * mod(0.06711056 * pos.x + 0.00583715 * pos.y, 1.0), 1.0) - 0.5;
+}
+
+const float rate = 5.0;
+
+vec4 TEX(sampler2D tex, vec2 uv, vec2 pixel_size, vec2 shift) {
+	uv = uv + ign_noise(uv/pixel_size + shift) * 0.002;
 	return (uv.x < 0.0 || uv.y < 0.0 || uv.x > 1.0 || uv.y > 1.0) ?
 		vec4(0.0) :
 		texture(tex, uv);
@@ -14,21 +22,21 @@ vec4 TEX(sampler2D tex, vec2 uv) {
 
 void fragment() {
 	vec2 OFFSET = SCREEN_PIXEL_SIZE;
-	float alpha = mix(texture(outlined_texture, SCREEN_UV).a,
+	float alpha = sqrt(
 				mix(texture(outlined_texture, SCREEN_UV + OFFSET).a,
 				mix(texture(outlined_texture, SCREEN_UV - OFFSET).a,
 				mix(texture(outlined_texture, SCREEN_UV + vec2(-OFFSET.x, OFFSET.y)).a,
-					texture(outlined_texture, SCREEN_UV + vec2(OFFSET.x, -OFFSET.y)).a, 0.5), 0.5), 0.5),
-				0.35);
+					texture(outlined_texture, SCREEN_UV + vec2(OFFSET.x, -OFFSET.y)).a, 0.5), 0.5), 0.5));
 	vec2 offset = max(SCREEN_PIXEL_SIZE, OUTLINE_SIZE/precision);
-
+	vec2 shift = vec2(floor(TIME * rate));
+	
 	COLOR.a = 0.0;
 	if (alpha > ALPHA_THRESHOLD) {
 		for(float x = offset.x, y = offset.y; x <= OUTLINE_SIZE.x || y <= OUTLINE_SIZE.y; x += offset.x, y += offset.y) {
-			if( TEX(outlined_texture, SCREEN_UV + vec2(-x, -y)).a < ALPHA_THRESHOLD ||
-				TEX(outlined_texture, SCREEN_UV + vec2(x, -y)).a < ALPHA_THRESHOLD ||
-				TEX(outlined_texture, SCREEN_UV + vec2(-x, y)).a < ALPHA_THRESHOLD ||
-				TEX(outlined_texture, SCREEN_UV + vec2(x, y)).a < ALPHA_THRESHOLD) {
+			if( TEX(outlined_texture, SCREEN_UV + vec2(-x, -y), SCREEN_PIXEL_SIZE, shift).a < ALPHA_THRESHOLD ||
+				TEX(outlined_texture, SCREEN_UV + vec2(x, -y), SCREEN_PIXEL_SIZE, shift).a < ALPHA_THRESHOLD ||
+				TEX(outlined_texture, SCREEN_UV + vec2(-x, y), SCREEN_PIXEL_SIZE, shift).a < ALPHA_THRESHOLD ||
+				TEX(outlined_texture, SCREEN_UV + vec2(x, y), SCREEN_PIXEL_SIZE, shift).a < ALPHA_THRESHOLD) {
 				COLOR.a = alpha;
 				break;
 			}

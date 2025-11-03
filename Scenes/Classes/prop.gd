@@ -82,23 +82,18 @@ func hit_rotate(body, f: float, reduce := 0.0):
 		_last_hit_angle_vel = body.angular_velocity
 
 var scale_tween : Tween
-var tween_nodes := {}
+var scale_nodes := {}
 func tween_scale(from : Vector2):
 	if is_inside_tree():
-		if tween_nodes == {}:
-			for node in get_children():
-				if node is Node2D:
-					tween_nodes[node] = node.scale
-		
-		for node in tween_nodes:
-			node.scale = tween_nodes[node] * from
+		for node in scale_nodes:
+			node.scale = scale_nodes[node] * from
 		restart_tween()
 
 func restart_tween():
 	util.clean_tween(scale_tween)
-	scale_tween = util.make_tween(self, Tween.TRANS_SINE, Tween.EASE_OUT, true)
-	for node in tween_nodes:
-		scale_tween.tween_property(node, "scale", tween_nodes[node], 0.25)
+	scale_tween = util.make_tween(self, Tween.TRANS_SINE, Tween.EASE_OUT, true, Tween.TWEEN_PROCESS_PHYSICS)
+	for node in scale_nodes:
+		scale_tween.tween_property(node, "scale", scale_nodes[node], 0.25)
 
 
 
@@ -126,8 +121,8 @@ func land_or_water(on_ply := true) -> bool:
 
 func set_side(obj: CanvasItem, side : int):
 	obj.scale.x = absf(obj.scale.x) * side
-	if tween_nodes.has(obj):
-		tween_nodes[obj].x = absf(tween_nodes[obj].x) * side
+	if scale_nodes.has(obj):
+		scale_nodes[obj].x = absf(scale_nodes[obj].x) * side
 
 
 

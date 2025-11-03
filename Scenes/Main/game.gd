@@ -41,6 +41,11 @@ func init_powerup_scene() : pass
 
 
 
+const POWERUP_ENABLE_LEVEL := Game.Mode.Teams + 1
+func powerups_enabled() -> bool : return bool()
+
+const EVENT_ENABLE_LEVEL := POWERUP_ENABLE_LEVEL + 1
+func events_enabled() -> bool : return bool()
 
 func add_powerup() : pass
 
@@ -98,4 +103,3 @@ func _transition_time(_time:float, _override:=-1.0) : pass
 func _process(_delta:float) -> void : return 
 
 func kill(_p:Prop) : pass
-

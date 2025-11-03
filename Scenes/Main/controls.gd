@@ -129,4 +129,3 @@ func setMenu(_boolean:bool) : pass
 var previous_mouse_pos := Vector2()
 var mouse_moved := false
 func _process(_delta:float) : pass
-
