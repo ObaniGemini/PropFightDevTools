@@ -6,7 +6,7 @@
 
 [sub_resource type="Environment" id="1"]
 background_mode = 3
-background_canvas_max_layer = 111
+background_canvas_max_layer = 110
 tonemap_mode = 3
 tonemap_white = 16.0
 ssr_fade_in = 0.219613
@@ -31,9 +31,6 @@ glow_hdr_scale = 4.0
 glow_hdr_luminance_cap = 256.0
 glow_map_strength = 0.0
 fog_light_energy = 21.15
-adjustment_brightness = 1.5
-adjustment_contrast = 1.1
-adjustment_saturation = 0.01
 
 [sub_resource type="Shader" id="Shader_so7vx"]
 code = "shader_type canvas_item;

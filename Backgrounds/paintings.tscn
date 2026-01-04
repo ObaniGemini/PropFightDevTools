@@ -31,8 +31,8 @@ void fragment() {
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2ngsx"]
 width = 64
 height = 64
-as_normal_map = true
 noise = SubResource("FastNoiseLite_81vsi")
+as_normal_map = true
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_8lwxi"]
 frequency = 0.0616
@@ -40,8 +40,8 @@ frequency = 0.0616
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xapg6"]
 width = 128
 height = 128
-seamless = true
 noise = SubResource("FastNoiseLite_8lwxi")
+seamless = true
 
 [sub_resource type="ShaderMaterial" id="2"]
 shader = SubResource("1")

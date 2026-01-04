@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://d0xsi4nro4j7h"
+uid="uid://dwu75l4jmboaa"
 path="res://.godot/imported/SourceHanSerifSC-Light.otf-941805b9142de08ca804980ba97ca8e6.fontdata"
 
 [deps]
@@ -21,6 +21,7 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
+modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true

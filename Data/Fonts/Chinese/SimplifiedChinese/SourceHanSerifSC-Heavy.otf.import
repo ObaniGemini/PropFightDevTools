@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cu6ll0lbkw4bo"
+uid="uid://bchf7pofl886e"
 path="res://.godot/imported/SourceHanSerifSC-Heavy.otf-6f66bfdb622d04e9703ef57df1afc6b3.fontdata"
 
 [deps]
@@ -21,6 +21,7 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
+modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=4
 keep_rounding_remainders=true

@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c51wrfy5k446r" path="res://Levels/portal/wall_for_exit.png" id="7"]
 [ext_resource type="PackedScene" uid="uid://jcdl13kns30s" path="res://Levels/portal/portal_button.tscn" id="8"]
 [ext_resource type="Script" path="res://Levels/portal/portal1.gd" id="9"]
-[ext_resource type="Script" path="res://Scenes/Classes/color_sprite.gd" id="11"]
+[ext_resource type="Script" uid="uid://ttv5e4qlx8tg" path="res://Scenes/Classes/level_block.gd" id="11_5niwp"]
 
 [sub_resource type="Gradient" id="Gradient_ykav0"]
 
@@ -18,7 +18,7 @@
 gradient = SubResource("Gradient_ykav0")
 
 [sub_resource type="Curve" id="Curve_ieo2w"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -95,10 +95,10 @@ z_index = -20
 position = Vector2(640, 544)
 emitting = false
 amount = 256
-process_material = SubResource("ParticleProcessMaterial_cmelh")
 texture = ExtResource("1")
 lifetime = 0.5
 fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_cmelh")
 
 [node name="Node2D" type="Node2D" parent="decor"]
 position = Vector2(640, 480)
@@ -106,9 +106,9 @@ position = Vector2(640, 480)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="decor/Node2D"]
 position = Vector2(0, 48)
 amount = 256
-process_material = SubResource("3")
 texture = ExtResource("1")
 lifetime = 2.0
+process_material = SubResource("3")
 
 [node name="door1" type="Sprite2D" parent="decor/Node2D"]
 texture = ExtResource("4")
@@ -239,17 +239,19 @@ shape = SubResource("11")
 position = Vector2(320, 608)
 
 [node name="portal_button" parent="collisions" instance=ExtResource("8")]
+visibility_layer = 3
 position = Vector2(1040, 573)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="collisions"]
 position = Vector2(640, 704)
-script = ExtResource("11")
+script = ExtResource("11_5niwp")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="collisions/StaticBody2D"]
 position = Vector2(0, 448)
 shape = SubResource("12")
 
 [node name="Sprite2D" type="Sprite2D" parent="collisions/StaticBody2D/CollisionShape2D3"]
+visibility_layer = 3
 scale = Vector2(1600, 1024)
 texture = ExtResource("1")
 
@@ -258,6 +260,7 @@ position = Vector2(-1152, 0)
 shape = SubResource("13")
 
 [node name="Sprite2D" type="Sprite2D" parent="collisions/StaticBody2D/CollisionShape2D4"]
+visibility_layer = 3
 scale = Vector2(1024, 2048)
 texture = ExtResource("1")
 
@@ -266,6 +269,7 @@ position = Vector2(1152, 0)
 shape = SubResource("13")
 
 [node name="Sprite2D" type="Sprite2D" parent="collisions/StaticBody2D/CollisionShape2D5"]
+visibility_layer = 3
 scale = Vector2(1024, 2048)
 texture = ExtResource("1")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://letkxeua6llx"]
+[gd_scene load_steps=39 format=3 uid="uid://dv5k5h6sjnjqe"]
 
 [ext_resource type="Texture2D" uid="uid://cw8jch5af7elt" path="res://Props/lightsaber/lightsaber_light.png" id="2"]
 [ext_resource type="AudioStream" uid="uid://1blcfby5b5in" path="res://Props/lightsaber/force_push.ogg" id="2_3ork5"]
@@ -76,7 +76,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dlku1"]
 _data = {
-"push": SubResource("Animation_dtnx2")
+&"push": SubResource("Animation_dtnx2")
 }
 
 [sub_resource type="Animation" id="Animation_3jxax"]
@@ -98,7 +98,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0ri6m"]
 _data = {
-"reload": SubResource("Animation_3jxax")
+&"reload": SubResource("Animation_3jxax")
 }
 
 [sub_resource type="Shader" id="Shader_sl74x"]
@@ -249,8 +249,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_atuak"]
 _data = {
-"close": SubResource("6"),
-"open": SubResource("7")
+&"close": SubResource("6"),
+&"open": SubResource("7")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f5asj"]
@@ -277,6 +277,7 @@ stream_4/stream = ExtResource("19_vro0f")
 
 [node name="Lightsaber" type="RigidBody2D" groups=["player"]]
 physics_material_override = SubResource("1")
+continuous_cd = 2
 max_contacts_reported = 1
 linear_damp = 1.0
 angular_damp = 2.0
@@ -302,13 +303,13 @@ bus = &"Reverb"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ForcePush"]
 libraries = {
-"": SubResource("AnimationLibrary_dlku1")
+&"": SubResource("AnimationLibrary_dlku1")
 }
 
 [node name="Reload" type="AnimationPlayer" parent="ForcePush"]
 root_node = NodePath("../../Node2D")
 libraries = {
-"": SubResource("AnimationLibrary_0ri6m")
+&"": SubResource("AnimationLibrary_0ri6m")
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="ForcePush"]
@@ -392,7 +393,7 @@ panning_strength = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_atuak")
+&"": SubResource("AnimationLibrary_atuak")
 }
 
 [node name="hit" type="AudioStreamPlayer2D" parent="."]

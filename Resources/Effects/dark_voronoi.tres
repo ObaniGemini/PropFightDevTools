@@ -1,0 +1,43 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dour7q5tjqsxv"]
+
+[sub_resource type="Shader" id="Shader_f76um"]
+code = "shader_type canvas_item;
+
+vec2 random2(vec2 p, float i) {
+	return fract(sin(vec2(dot(p,vec2(15.2,i)),dot(p,vec2(26,18))))*4785.3);
+}
+
+float random(vec2 st) {
+	return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*43758.5453123);
+}
+
+const float enhanceFactor = 5.0;
+
+void fragment() {
+	const int SEEDS = 500;
+	vec3 color = vec3(0);
+	vec2 point[SEEDS];
+	float minDist = 1.0;
+
+	vec2 pos = SCREEN_UV * (SCREEN_PIXEL_SIZE / max(SCREEN_PIXEL_SIZE.x, SCREEN_PIXEL_SIZE.y));
+
+	for (int i = 0; i < SEEDS; i++) {
+		float float_i = float(i);
+		point[i] = random2(vec2(float_i, float_i), (float_i * float_i)/3232.0);
+
+		float dist = distance(pos, point[i] + cos(pos.x * 10.0 + TIME * 0.4 + pos.y * 10.0) * 0.05);
+
+		minDist = min(minDist, dist);
+	}
+
+	color += minDist * minDist * enhanceFactor;
+
+	vec3 other_color = vec3(0.247, 0.263, 0.29) * 0.15;
+	other_color.rg *= cos(SCREEN_UV * 10.0 + TIME * 0.5) * 0.3 + 0.7;
+
+	COLOR.rgb = mix((1.5 * color), other_color, 0.5);
+}
+"
+
+[resource]
+shader = SubResource("Shader_f76um")

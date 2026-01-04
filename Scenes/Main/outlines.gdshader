@@ -13,20 +13,26 @@ float ign_noise(vec2 pos) {
 
 const float rate = 5.0;
 
+vec2 ign_offset(vec2 uv, vec2 pixel_size, vec2 shift) {
+	return uv + ign_noise(uv/pixel_size + shift) * 0.002;
+}
+
 vec4 TEX(sampler2D tex, vec2 uv, vec2 pixel_size, vec2 shift) {
-	uv = uv + ign_noise(uv/pixel_size + shift) * 0.002;
+	uv = ign_offset(uv, pixel_size, shift);
 	return (uv.x < 0.0 || uv.y < 0.0 || uv.x > 1.0 || uv.y > 1.0) ?
 		vec4(0.0) :
 		texture(tex, uv);
 }
 
 void fragment() {
-	vec2 OFFSET = SCREEN_PIXEL_SIZE;
-	float alpha = sqrt(
-				mix(texture(outlined_texture, SCREEN_UV + OFFSET).a,
-				mix(texture(outlined_texture, SCREEN_UV - OFFSET).a,
-				mix(texture(outlined_texture, SCREEN_UV + vec2(-OFFSET.x, OFFSET.y)).a,
-					texture(outlined_texture, SCREEN_UV + vec2(OFFSET.x, -OFFSET.y)).a, 0.5), 0.5), 0.5));
+	vec2 off = SCREEN_PIXEL_SIZE;
+	float alpha = max(
+					max(texture(outlined_texture, SCREEN_UV + off).a,
+						texture(outlined_texture, SCREEN_UV - off).a),
+					max(texture(outlined_texture, SCREEN_UV + vec2(-off.x, off.y)).a,
+						texture(outlined_texture, SCREEN_UV + vec2(off.x, -off.y)).a));
+	
+	
 	vec2 offset = max(SCREEN_PIXEL_SIZE, OUTLINE_SIZE/precision);
 	vec2 shift = vec2(floor(TIME * rate));
 	
@@ -41,5 +47,14 @@ void fragment() {
 				break;
 			}
 		}
+	} else {
+		off = SCREEN_PIXEL_SIZE * 2.0;
+		float alpha2 = max(
+					max(texture(outlined_texture, ign_offset(SCREEN_UV + off, SCREEN_PIXEL_SIZE, shift)).a,
+						texture(outlined_texture, ign_offset(SCREEN_UV - off, SCREEN_PIXEL_SIZE, shift)).a),
+					max(texture(outlined_texture, ign_offset(SCREEN_UV + vec2(-off.x, off.y), SCREEN_PIXEL_SIZE, shift)).a,
+						texture(outlined_texture, ign_offset(SCREEN_UV + vec2(off.x, -off.y), SCREEN_PIXEL_SIZE, shift)).a));
+		
+		COLOR.a = alpha + alpha2;
 	}
 }

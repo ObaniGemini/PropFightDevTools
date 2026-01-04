@@ -1,0 +1,45 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bcd1kjhewn3up"]
+
+[sub_resource type="Shader" id="Shader_ti47k"]
+code = "shader_type canvas_item;
+
+vec2 random2(vec2 p, float i) {
+	return fract(sin(vec2(dot(p,vec2(15.2,i)),dot(p,vec2(26,18))))*4785.3);
+}
+
+float random(vec2 st) {
+	return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*43758.5453123);
+}
+
+const float enhanceFactor = 20.0;
+
+void fragment() {
+	const int SEEDS = 100;
+	vec2 point[SEEDS];
+	int idx = 0;
+	float minDist = 1.0;
+
+	vec2 pos = SCREEN_UV * (SCREEN_PIXEL_SIZE / max(SCREEN_PIXEL_SIZE.x, SCREEN_PIXEL_SIZE.y));
+
+	for (int i = 0; i < SEEDS; i++) {
+		float float_i = float(i);
+		point[i] = random2(vec2(float_i, float_i), (float_i * float_i)/3232.0);
+		point[i].x += cos(TIME * 0.001) * 0.1;
+		point[i].y += cos(TIME * 0.007246) * 0.1;
+
+		float dist = distance(pos, point[i]);
+		if( dist < minDist) {
+			minDist = dist;
+			idx = i;
+		}
+	}
+
+	vec3 c = vec3(point[idx].x, point[idx].y, abs(point[idx].x - point[idx].y)) * 100.0;
+	COLOR.rgb = vec3(fract(c.r), fract(c.g), fract(c.b)) * (0.25 + minDist * 0.75) * 0.25;
+	COLOR.rg *= cos(SCREEN_UV * 10.0 + TIME * 0.5) * 0.3 + 0.7;
+
+}
+"
+
+[resource]
+shader = SubResource("Shader_ti47k")

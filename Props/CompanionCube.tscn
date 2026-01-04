@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://hpx7oxs2dtge"]
+[gd_scene load_steps=19 format=3 uid="uid://7vhqu0312bt7"]
 
 [ext_resource type="Script" path="res://Props/companioncube/companion_cube.gd" id="1_8apqe"]
 [ext_resource type="AudioStream" uid="uid://bdxvcknt001oo" path="res://Props/companioncube/ground/sound_physics_cube_phys_cube_lg_01.ogg" id="2_mekrg"]
@@ -43,7 +43,8 @@ stream_5/stream = ExtResource("16_ycusy")
 [node name="CompanionCube" type="RigidBody2D"]
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_ulu62")
-gravity_scale = 1.9
+gravity_scale = 1.8
+continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 1
 angular_damp = 2.0

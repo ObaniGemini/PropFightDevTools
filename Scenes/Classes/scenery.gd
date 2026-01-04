@@ -8,4 +8,5 @@ func add_sound(stream: Node):
 	sounds.push_front(stream)
 	sounds_base_volume.push_front(stream.volume_db)
 
+signal exitting
 func exit(): pass

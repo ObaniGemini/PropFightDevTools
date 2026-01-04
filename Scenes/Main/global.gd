@@ -4,17 +4,17 @@ const MAX_TEAMS := 2
 const MAX_PLAYERS := 8
 
 const plyColors := [
-	Color8(255, 100, 100), #red
-	Color8(255, 165, 80), #darkorange
-	Color8(230, 235, 90), #yellow
-	Color8(150, 220, 100), #green
-	Color8(140, 210, 255), #light blue
-	Color8(40, 100, 180), #blue
-	Color8(150, 131, 236), #violet
-	Color8(255, 170, 200), #pink
-	Color8(220, 220, 230), #white
-	Color8(120, 120, 140), #gray
-	Color8(147, 82, 35), #brown
+	Color(1.0, 0.392, 0.392), #red			Color8(255, 100, 100)
+	Color(1.0, 0.647, 0.314), #darkorange		Color8(255, 165, 80)
+	Color(0.902, 0.922, 0.353), #yellow		Color8(230, 235, 90)
+	Color(0.588, 0.863, 0.392), #green		Color8(150, 220, 100)
+	Color(0.549, 0.823, 1.0), #light blue		Color8(140, 210, 255)
+	Color(0.157, 0.392, 0.706), #blue			Color8(40, 100, 180)
+	Color(0.588, 0.514, 0.925), #violet		Color8(150, 131, 236)
+	Color(1.0, 0.667, 0.784), #pink			Color8(255, 170, 200)
+	Color(0.863, 0.863, 0.902), #white		Color8(220, 220, 230)
+	Color(0.471, 0.471, 0.549), #gray			Color8(120, 120, 140)
+	Color(0.576, 0.322, 0.137), #brown		Color8(147, 82, 35)
 	Color(-5, -5, -5),
 	Color(7, 0, 0),
 	Color(0, 5, 0),
@@ -137,8 +137,8 @@ class Team:
 
 
 var teams := [
-	Team.new(0, Color8(255, 118, 0)),
-	Team.new(1, Color8(0, 115, 214)),
+	Team.new(0, Color(1.0, 0.463, 0.0)),		# orange	Color8(255, 118, 0)
+	Team.new(1, Color(0.0, 0.451, 0.839)),	# blue		Color8(0, 115, 214)
 	#Team.new(2, Color8(50, 255, 100)),
 	#Team.new(3, Color8(240, 255, 50)),
 	#Team.new(4, Color8(200, 50, 255)),

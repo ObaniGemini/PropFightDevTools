@@ -38,7 +38,7 @@ game="*res://Scenes/Main/game.gd"
 environment="*res://Scenes/Main/environment.tscn"
 config="*res://Scenes/Main/config.gd"
 camera="*res://Scenes/Main/camera.tscn"
-color="*res://Scenes/Main/color.gd"
+blocks="*res://Scenes/Main/blocks.gd"
 
 [debug]
 
